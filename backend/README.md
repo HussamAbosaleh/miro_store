@@ -1,14 +1,56 @@
-# MIRO Store
+# MIRO Store – E-Commerce Backend
 
-Full-Stack E-Commerce Graduation Project
+Full-stack graduation project (Backend phase completed).
 
-## Current Progress
-- Backend initialized
-- Express server configured
-- Environment variables setup
-- Root route created
+## 📌 Project Overview
 
-## Tech Stack
+MIRO Store is an e-commerce platform backend built using Node.js, Express, and MongoDB.
+
+This backend includes:
+
+- User registration
+- Password hashing using bcrypt
+- Secure login system
+- JWT authentication
+- Protected data handling
+- Secure model configuration (password hidden by default)
+
+---
+
+## 🛠 Tech Stack
+
 - Node.js
-- Express
-- dotenv
+- Express.js
+- MongoDB
+- Mongoose
+- bcrypt
+- jsonwebtoken
+
+---
+
+## 🔐 Authentication Flow
+
+1. User registers with name, email, and password.
+2. Password is hashed using bcrypt.
+3. User logs in.
+4. Server verifies credentials.
+5. JWT token is generated and returned.
+6. Token must be sent in protected routes using:
+
+## Authorization: Bearer <token>
+## 📦 Installation
+Clone the repository:
+
+```bash
+git clone <your-repo-link>
+cd miro_store/backend
+npm install 
+
+
+##Environment Variables
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_key
+
+## Run Development Server
+npm run dev
