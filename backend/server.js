@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 5000;
 const requiredEnvVars = ["MONGO_URI", "JWT_SECRET"];
 const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
 
+const productRoutes = require("./routes/product.routes");
+
+
 if (missingEnvVars.length) {
   console.error(`Missing required environment variables: ${missingEnvVars.join(", ")}`);
   process.exit(1);
@@ -22,7 +25,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
-
+app.use("/api/products", productRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/users", userRoutes);
 
