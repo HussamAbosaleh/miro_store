@@ -36,7 +36,7 @@ This backend includes:
 ## Installation
 
 ```bash
-git clone <your-repo-link>
+git clone <your-repo-link >
 cd miro_store/backend
 npm install
 ```
