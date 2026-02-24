@@ -54,3 +54,27 @@ JWT_SECRET=your_super_secret_key
 ```bash
 npm run dev
 ```
+## ✅ Implemented Features
+
+### Authentication
+- JWT-based authentication
+- Protected routes
+- Admin authorization middleware
+
+### Products API
+- Create product (Admin only)
+- Update product (Admin only)
+- Delete product (Admin only)
+- Get all products (Public)
+  - Pagination
+  - Filtering by gender
+  - Sorting
+- Get single product by ID
+- Update stock by size (Admin only)
+  - PATCH /api/products/:id/stock
+
+### Security
+- Password hashing with bcrypt
+- JWT token validation
+- ObjectId validation
+- Basic stock validation
