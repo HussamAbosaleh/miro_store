@@ -1,16 +1,38 @@
 const products = [
   {
-    name: "MIRO Hoodie Black",
-    description: "Premium cotton hoodie",
+    name: "Classic Hoodie",
+    description: "Premium cotton hoodie with relaxed fit.",
     price: 59.99,
+    category: "hoodies",
     gender: "men",
-    image: "/assets/hoodie-black.jpg",
+    image: "/assets/products/hoodie1.jpg",
+    isActive: true,
+    rating: 0,
+    numReviews: 0,
     sizes: [
       { size: "S", stock: 10 },
-      { size: "M", stock: 8 },
-      { size: "L", stock: 5 }
-    ]
-  }
+      { size: "M", stock: 15 },
+      { size: "L", stock: 8 },
+      { size: "XL", stock: 5 },
+    ],
+  },
+  {
+    name: "Slim Fit T-Shirt",
+    description: "Soft breathable fabric for everyday wear.",
+    price: 29.99,
+    category: "tshirts",
+    gender: "women",
+    image: "/assets/products/tshirt1.jpg",
+    isActive: true,
+    rating: 0,
+    numReviews: 0,
+    sizes: [
+      { size: "XS", stock: 7 },
+      { size: "S", stock: 12 },
+      { size: "M", stock: 9 },
+      { size: "L", stock: 6 },
+    ],
+  },
 ];
 
 module.exports = products;

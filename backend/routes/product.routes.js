@@ -6,24 +6,23 @@ const {
   getProducts,
   getProductById,
   updateProduct,
+  updateProductSizes,
   deleteProduct,
-  updateStock
+  addProductReview,
 } = require("../controllers/product.controller");
-
 
 const { protect } = require("../middleware/auth.middleware");
 const { adminOnly } = require("../middleware/admin.middleware");
 
-// ================= PUBLIC ROUTES =================
+// PUBLIC
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 
-// ================= ADMIN ROUTES =================
+// ADMIN
 router.post("/", protect, adminOnly, createProduct);
 router.put("/:id", protect, adminOnly, updateProduct);
+router.put("/:id/sizes", protect, adminOnly, updateProductSizes);
 router.delete("/:id", protect, adminOnly, deleteProduct);
-
-// 🔥 تحديث المخزون فقط
-router.patch("/:id/stock", protect, adminOnly, updateStock);
+router.post("/:id/reviews", protect, addProductReview);
 
 module.exports = router;

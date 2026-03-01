@@ -10,24 +10,54 @@ const normalizePositiveInt = (value, fallback) => {
   return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
 };
 
-// ================= CREATE PRODUCT =================
+// ================= CREATE PRODUCT (ADMIN) =================
 const createProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body);
+    const { name, description, price, category, gender, image } = req.body;
+
+    if (!name || !description || !price || !category || !gender || !image) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (price < 0) {
+      return res.status(400).json({ message: "Price must be positive" });
+    }
+
+    if (!ALLOWED_GENDERS.includes(gender)) {
+      return res.status(400).json({ message: "Invalid gender" });
+    }
+
+    const product = await Product.create({
+      name,
+      description,
+      price,
+      category,
+      gender,
+      image,
+      sizes: [],
+    });
+
     return res.status(201).json(product);
   } catch (error) {
-    return res.status(400).json({ message: error.message || "Invalid product data" });
+    return res.status(500).json({ message: "Failed to create product" });
   }
 };
 
-// ================= GET ALL PRODUCTS (WITH PAGINATION) =================
+// ================= GET ALL PRODUCTS =================
 const getProducts = async (req, res) => {
   try {
     const page = normalizePositiveInt(req.query.page, 1);
-    const limit = normalizePositiveInt(req.query.limit, 5);
+    const limit = normalizePositiveInt(req.query.limit, 6);
     const skip = (page - 1) * limit;
 
-    const filter = {};
+    const filter = { isActive: true };
+
+    // 🔥 Search by keyword (with trim)
+    if (req.query.keyword) {
+      const keyword = req.query.keyword.trim();
+      filter.name = { $regex: keyword, $options: "i" };
+    }
+
     if (req.query.gender) {
       if (!ALLOWED_GENDERS.includes(req.query.gender)) {
         return res.status(400).json({ message: "Invalid gender filter" });
@@ -35,21 +65,32 @@ const getProducts = async (req, res) => {
       filter.gender = req.query.gender;
     }
 
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+
+    if (req.query.minPrice || req.query.maxPrice) {
+      filter.price = {};
+      if (req.query.minPrice)
+        filter.price.$gte = Number(req.query.minPrice);
+      if (req.query.maxPrice)
+        filter.price.$lte = Number(req.query.maxPrice);
+    }
+
     const sortOption = {};
     if (req.query.sort && !ALLOWED_SORTS.includes(req.query.sort)) {
       return res.status(400).json({ message: "Invalid sort option" });
     }
 
-    if (req.query.sort === "price") {
-      sortOption.price = 1;
-    } else if (req.query.sort === "-price") {
-      sortOption.price = -1;
-    } else if (req.query.sort === "newest") {
-      sortOption.createdAt = -1;
-    }
+    if (req.query.sort === "price") sortOption.price = 1;
+    else if (req.query.sort === "-price") sortOption.price = -1;
+    else if (req.query.sort === "newest") sortOption.createdAt = -1;
 
     const total = await Product.countDocuments(filter);
-    const products = await Product.find(filter).sort(sortOption).skip(skip).limit(limit);
+    const products = await Product.find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit);
 
     return res.json({
       page,
@@ -65,14 +106,13 @@ const getProducts = async (req, res) => {
 // ================= GET SINGLE PRODUCT =================
 const getProductById = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    if (!isValidObjectId(id)) {
-      return res.status(400).json({ message: "Invalid product ID format" });
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid product ID" });
     }
 
-    const product = await Product.findById(id);
-    if (!product) {
+    const product = await Product.findById(req.params.id);
+
+    if (!product || !product.isActive) {
       return res.status(404).json({ message: "Product not found" });
     }
 
@@ -85,89 +125,154 @@ const getProductById = async (req, res) => {
 // ================= UPDATE PRODUCT =================
 const updateProduct = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    if (!isValidObjectId(id)) {
-      return res.status(400).json({ message: "Invalid product ID format" });
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid product ID" });
     }
 
-    const product = await Product.findById(id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    const { name, description, price, category, gender, image } = req.body;
+
+    if (price !== undefined && price < 0) {
+      return res.status(400).json({ message: "Price must be positive" });
     }
 
-    product.name = req.body.name ?? product.name;
-    product.description = req.body.description ?? product.description;
-    product.price = req.body.price ?? product.price;
-    product.gender = req.body.gender ?? product.gender;
-    product.image = req.body.image ?? product.image;
-    product.sizes = req.body.sizes ?? product.sizes;
+    product.name = name ?? product.name;
+    product.description = description ?? product.description;
+    product.price = price ?? product.price;
+    product.category = category ?? product.category;
+    product.gender = gender ?? product.gender;
+    product.image = image ?? product.image;
 
-    const updatedProduct = await product.save();
-    return res.json(updatedProduct);
+    const updated = await product.save();
+    return res.json(updated);
   } catch (error) {
-    return res.status(400).json({ message: error.message || "Invalid product data" });
+    return res.status(500).json({ message: "Update failed" });
   }
 };
 
-// ================= UPDATE STOCK ONLY =================
-const updateStock = async (req, res) => {
+// ================= UPDATE SIZES =================
+const updateProductSizes = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { size, stock } = req.body;
-
-    if (!isValidObjectId(id)) {
-      return res.status(400).json({ message: "Invalid product ID format" });
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid product ID" });
     }
 
-    if (!size || typeof size !== "string") {
-      return res.status(400).json({ message: "Size is required" });
+    const { sizes } = req.body;
+
+    if (!Array.isArray(sizes) || sizes.length === 0) {
+      return res.status(400).json({ message: "Sizes array required" });
     }
 
-    if (!Number.isInteger(stock)) {
-      return res.status(400).json({ message: "Stock must be an integer number" });
+    const sizeNames = sizes.map((s) => s.size);
+    const uniqueSizes = new Set(sizeNames);
+
+    if (uniqueSizes.size !== sizeNames.length) {
+      return res.status(400).json({
+        message: "Duplicate sizes are not allowed",
+      });
     }
 
-    if (stock < 0) {
-      return res.status(400).json({ message: "Stock cannot be negative" });
+    for (const s of sizes) {
+      if (!s.size || s.stock < 0) {
+        return res.status(400).json({ message: "Invalid size data" });
+      }
     }
 
-    const product = await Product.findById(id);
-    if (!product) {
+    const product = await Product.findById(req.params.id);
+    if (!product)
       return res.status(404).json({ message: "Product not found" });
-    }
 
-    const sizeItem = product.sizes.find((s) => s.size === size);
-    if (!sizeItem) {
-      return res.status(404).json({ message: "Size not found" });
-    }
+    product.sizes = sizes;
 
-    sizeItem.stock = stock;
     await product.save();
 
-    return res.json({ message: "Stock updated successfully", product });
+    return res.json(product);
   } catch (error) {
-    return res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Failed to update sizes" });
   }
 };
 
-// ================= DELETE PRODUCT =================
+// ================= SOFT DELETE PRODUCT =================
 const deleteProduct = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    if (!isValidObjectId(id)) {
-      return res.status(400).json({ message: "Invalid product ID format" });
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid product ID" });
     }
 
-    const product = await Product.findByIdAndDelete(id);
+    const product = await Product.findById(req.params.id);
+    if (!product)
+      return res.status(404).json({ message: "Product not found" });
+
+    product.isActive = false;
+    await product.save();
+
+    return res.json({ message: "Product deactivated" });
+  } catch (error) {
+    return res.status(500).json({ message: "Delete failed" });
+  }
+};
+
+// ================= ADD PRODUCT REVIEW =================
+const addProductReview = async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
+
+    if (!rating || !comment) {
+      return res
+        .status(400)
+        .json({ message: "Rating and comment required" });
+    }
+
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    return res.json({ message: "Product deleted" });
+    const Order = require("../models/Order");
+
+    const hasPurchased = await Order.findOne({
+      user: req.user._id,
+      isPaid: true,
+      "orderItems.product": product._id,
+    });
+
+    if (!hasPurchased) {
+      return res.status(403).json({
+        message: "You can review only products you have purchased",
+      });
+    }
+
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      return res
+        .status(400)
+        .json({ message: "Product already reviewed" });
+    }
+
+    const review = {
+      user: req.user._id,
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+    };
+
+    product.reviews.push(review);
+
+    product.numReviews += 1;
+    product.rating =
+      (product.rating * (product.numReviews - 1) + Number(rating)) /
+      product.numReviews;
+
+    await product.save();
+
+    res.status(201).json({ message: "Review added" });
   } catch (error) {
-    return res.status(500).json({ message: "Delete failed" });
+    res.status(500).json({ message: "Failed to add review" });
   }
 };
 
@@ -176,6 +281,7 @@ module.exports = {
   getProducts,
   getProductById,
   updateProduct,
+  updateProductSizes,
   deleteProduct,
-  updateStock,
+  addProductReview,
 };

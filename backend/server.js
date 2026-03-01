@@ -6,6 +6,7 @@ const userRoutes = require("./routes/user.routes");
 const healthRoutes = require("./routes/health.routes");
 const productRoutes = require("./routes/product.routes");
 const orderRoutes = require("./routes/order.routes");
+const adminRoutes = require("./routes/admin.routes");
 
 
 const app = express();
@@ -21,16 +22,21 @@ if (missingEnvVars.length) {
 
 connectDB();
 
-app.use(express.json());
+// PayPal config endpoint
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID);
+});
 
+app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
-
+app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
