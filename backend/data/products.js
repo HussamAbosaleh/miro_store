@@ -5,7 +5,11 @@ const products = [
     price: 59.99,
     category: "hoodies",
     gender: "men",
-    image: "/assets/products/hoodie1.jpg",
+    images: [
+      "/uploads/products/hoodie-black-man-1.png",
+      "/uploads/products/hoodie-black-man-2.png",
+      "/uploads/products/hoodie-black-man-3.png"
+    ],
     isActive: true,
     rating: 0,
     numReviews: 0,
@@ -22,7 +26,11 @@ const products = [
     price: 29.99,
     category: "tshirts",
     gender: "women",
-    image: "/assets/products/tshirt1.jpg",
+    images:[
+      "/uploads/products/hoodie-black-man-1.png",
+      "/uploads/products/hoodie-black-man-2.png",
+      "/uploads/products/hoodie-black-man-3.png"
+    ],
     isActive: true,
     rating: 0,
     numReviews: 0,

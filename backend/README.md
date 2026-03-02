@@ -1,80 +1,60 @@
-# MIRO Store - E-Commerce Backend
+📌 Miro Store – Full Stack E-commerce Backend
 
-Full-stack graduation project (Backend phase completed).
 
-## Project Overview
+🧩 Overview
 
-MIRO Store is an e-commerce platform backend built using Node.js, Express, and MongoDB.
+Miro Store is a backend API for an e-commerce clothing store built with:
+Node.js
+Express
+MongoDB
 
-This backend includes:
+JWT Authentication
+The system supports:
+User authentication
+Product management
+Order processing
+PayPal sandbox payment
+Product reviews (only for verified purchases)
+Admin dashboard statistics
 
-- User registration
-- Password hashing using bcrypt
-- Secure login system
-- JWT authentication
-- Protected data handling
-- Secure model configuration (password hidden by default)
+🚀 Features
 
-## Tech Stack
+👤 User
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- bcrypt
-- jsonwebtoken
+Register / Login (JWT)
+View products with:
+Pagination
+Filtering (gender, category, price)
+Sorting (price, newest)
+Create orders
+Pay order (PayPal sandbox)
+Leave review (only if purchased)
+🛠 Admin
+Create / Update / Soft delete products
+Manage sizes & stock
+View all orders
+View admin statistics:
+Total users
+Total products
+Total orders
+Paid orders
+Total revenue
 
-## Authentication Flow
 
-1. User registers with name, email, and password.
-2. Password is hashed using bcrypt.
-3. User logs in.
-4. Server verifies credentials.
-5. JWT token is generated and returned.
-6. Token must be sent in protected routes using `Authorization: Bearer <token>`.
+project structrue
 
-## Installation
+backend/
+ ├── controllers
+ ├── models
+ ├── routes
+ ├── middleware
+ ├── config
+ └── server.js
 
-```bash
-git clone <your-repo-link >
-cd miro_store/backend
-npm install
-```
+⚙️ Environment Variables
 
-## Environment Variables
-
-```env
+Create .env file:
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_super_secret_key
-```
-
-## Run Development Server
-
-```bash
-npm run dev
-```
-## ✅ Implemented Features
-
-### Authentication
-- JWT-based authentication
-- Protected routes
-- Admin authorization middleware
-
-### Products API
-- Create product (Admin only)
-- Update product (Admin only)
-- Delete product (Admin only)
-- Get all products (Public)
-  - Pagination
-  - Filtering by gender
-  - Sorting
-- Get single product by ID
-- Update stock by size (Admin only)
-  - PATCH /api/products/:id/stock
-
-### Security
-- Password hashing with bcrypt
-- JWT token validation
-- ObjectId validation
-- Basic stock validation
+MONGO_URI=mongodb://localhost:27017/miro_store
+JWT_SECRET=my_super_secret_key_123456
+PAYPAL_CLIENT_ID=JWT_SECRET=my_super_secret_key_123456
