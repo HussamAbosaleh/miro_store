@@ -1,60 +1,135 @@
-📌 Miro Store – Full Stack E-commerce Backend
+Miro Store Backend API
 
+Backend API for the Miro Store e-commerce project.
 
-🧩 Overview
+Built with:
 
-Miro Store is a backend API for an e-commerce clothing store built with:
-Node.js
-Express
-MongoDB
+- Node.js
+- Express
+- MongoDB
+- JWT Authentication
+- PayPal Sandbox
 
-JWT Authentication
-The system supports:
-User authentication
-Product management
-Order processing
-PayPal sandbox payment
-Product reviews (only for verified purchases)
-Admin dashboard statistics
+---
 
-🚀 Features
+Overview
 
-👤 User
+The backend provides the core API for an online clothing store.
 
-Register / Login (JWT)
-View products with:
-Pagination
-Filtering (gender, category, price)
-Sorting (price, newest)
-Create orders
-Pay order (PayPal sandbox)
-Leave review (only if purchased)
-🛠 Admin
-Create / Update / Soft delete products
-Manage sizes & stock
-View all orders
-View admin statistics:
-Total users
-Total products
-Total orders
-Paid orders
-Total revenue
+It handles:
 
+- User authentication
+- Product management
+- Cart and orders
+- PayPal sandbox payments
+- Product reviews (only for verified purchases)
+- Admin dashboard statistics
 
-project structrue
+---
+
+Tech Stack
+
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JSON Web Token (JWT)
+- PayPal Sandbox API
+
+---
+
+Features
+
+User
+
+- Register / Login (JWT authentication)
+- Browse products with:
+  - Pagination
+  - Filtering (gender, category, price)
+  - Sorting (price, newest)
+- Create orders
+- Pay orders using PayPal sandbox
+- Leave product reviews (only if purchased)
+
+Admin
+
+- Create products
+
+- Update products
+
+- Soft delete products
+
+- Manage product sizes and stock
+
+- View all orders
+
+- View dashboard statistics:
+  
+  - Total users
+  - Total products
+  - Total orders
+  - Paid orders
+  - Total revenue
+
+---
+
+Project Structure
 
 backend/
- ├── controllers
- ├── models
- ├── routes
- ├── middleware
- ├── config
- └── server.js
+├── controllers
+├── models
+├── routes
+├── middleware
+├── config
+└── server.js
 
-⚙️ Environment Variables
+---
 
-Create .env file:
+Environment Variables
+
+Create a ".env" file inside the backend folder:
+
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/miro_store
-JWT_SECRET=my_super_secret_key_123456
-PAYPAL_CLIENT_ID=JWT_SECRET=my_super_secret_key_123456
+JWT_SECRET=your_jwt_secret
+PAYPAL_CLIENT_ID=your_paypal_client_id
+
+---
+
+Run Backend
+
+Install dependencies:
+
+npm install
+
+Start development server:
+
+npm run dev
+
+Server runs on:
+
+http://localhost:5000
+
+---
+
+API Base URL
+
+http://localhost:5000/api
+
+Example endpoints:
+
+Method| Endpoint| Description
+POST| /api/users/login| Login user
+POST| /api/users/register| Register user
+GET| /api/products| Get products
+POST| /api/orders| Create order
+GET| /api/orders/my| Get user orders
+
+---
+
+Future Improvements
+
+- Payment confirmation webhooks
+- Email order notifications
+- Product image optimization
+- Deployment with Docker
+- Production environment configuration
