@@ -1,67 +1,89 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
+import logo from "../assets/logo.png";
+import { useState, useEffect, useContext } from "react";
+import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 
-function Navbar() {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+function Navbar(){
 
-  const logoutHandler = () => {
-    logout();
-    navigate("/");
-  };
+const [scrolled,setScrolled] = useState(false);
 
-  return (
-    <nav style={styles.nav}>
-      <Link to="/" style={styles.logo}>
-        Miro Store
-      </Link>
+const { cartItems } = useContext(CartContext);
+const { user, logout } = useContext(AuthContext);
 
-      <div style={styles.links}>
-        <Link to="/">Home</Link>
+useEffect(()=>{
 
-        {user ? (
-          <>
-            <Link to="/cart">Cart</Link>
-            <button onClick={logoutHandler} style={styles.button}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <Link to="/login">Login</Link>
-        )}
-      </div>
-    </nav>
-  );
+const handleScroll = () => {
+
+if(window.scrollY > 50){
+setScrolled(true);
+}else{
+setScrolled(false);
 }
 
-const styles = {
-  nav: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "15px 40px",
-    background: "#111",
-    color: "#fff",
-  },
-  logo: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: "20px",
-    textDecoration: "none",
-  },
-  links: {
-    display: "flex",
-    gap: "20px",
-    alignItems: "center",
-  },
-  button: {
-    background: "#ff4d4d",
-    border: "none",
-    color: "white",
-    padding: "6px 12px",
-    cursor: "pointer",
-  },
 };
+
+window.addEventListener("scroll",handleScroll);
+
+return () => window.removeEventListener("scroll",handleScroll);
+
+},[]);
+
+return(
+
+<header className={scrolled ? "navbar scrolled" : "navbar"}>
+
+<div className="nav-container">
+
+<Link to="/" className="logo">
+<img src={logo} alt="Miro"/>
+</Link>
+
+<nav className="nav-links">
+
+<Link to="/">Home</Link>
+<Link to="/men">Men</Link>
+<Link to="/women">Women</Link>
+
+</nav>
+
+<div className="nav-right">
+
+<Link to="/cart" className="cart">
+
+🛒
+
+{cartItems.length > 0 && (
+<span className="cart-badge">
+{cartItems.length}
+</span>
+)}
+
+</Link>
+
+{user ? (
+
+<button className="login logout-btn" onClick={logout}>
+Logout
+</button>
+
+) : (
+
+<Link to="/login" className="login">
+Login
+</Link>
+
+)}
+
+</div>
+
+</div>
+
+</header>
+
+)
+
+}
 
 export default Navbar;

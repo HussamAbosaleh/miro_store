@@ -25,13 +25,11 @@ const addToCart = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // تحقق من توفر المقاس
     const sizeObj = product.sizes?.find((s) => s.size === size);
     if (!sizeObj) {
       return res.status(400).json({ message: "Size not available" });
     }
 
-    // احضر أو أنشئ سلة
     let cart = await Cart.findOne({ user: req.user._id });
 
     if (!cart) {
@@ -41,11 +39,8 @@ const addToCart = async (req, res) => {
       });
     }
 
-    // تحقق إذا المنتج + المقاس موجودين مسبقاً
     const existingIndex = cart.items.findIndex(
-      (it) =>
-        it.product.toString() === productId &&
-        it.size === size
+      (it) => it.product.toString() === productId && it.size === size
     );
 
     const image =
@@ -55,20 +50,14 @@ const addToCart = async (req, res) => {
       const currentQty = cart.items[existingIndex].quantity;
       const newQty = currentQty + qty;
 
-      // 🔥 التحقق الصحيح من stock
       if (newQty > sizeObj.stock) {
-        return res
-          .status(400)
-          .json({ message: "Not enough stock" });
+        return res.status(400).json({ message: "Not enough stock" });
       }
 
       cart.items[existingIndex].quantity = newQty;
     } else {
-      // تحقق من stock في حالة إضافة جديدة
       if (qty > sizeObj.stock) {
-        return res
-          .status(400)
-          .json({ message: "Not enough stock" });
+        return res.status(400).json({ message: "Not enough stock" });
       }
 
       cart.items.push({
@@ -112,7 +101,87 @@ const getMyCart = async (req, res) => {
   }
 };
 
+// ================= UPDATE CART ITEM =================
+const updateCartItem = async (req, res) => {
+  try {
+    const { productId, size, quantity } = req.body;
+
+    const qty = Number(quantity);
+
+    if (!Number.isInteger(qty) || qty < 1) {
+      return res.status(400).json({
+        message: "Quantity must be >= 1",
+      });
+    }
+
+    const cart = await Cart.findOne({ user: req.user._id });
+
+    if (!cart) {
+      return res.status(404).json({
+        message: "Cart not found",
+      });
+    }
+
+    const item = cart.items.find(
+      (it) =>
+        it.product.toString() === productId &&
+        it.size === size
+    );
+
+    if (!item) {
+      return res.status(404).json({
+        message: "Item not found in cart",
+      });
+    }
+
+    item.quantity = qty;
+
+    await cart.save();
+
+    res.json(cart);
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to update cart",
+    });
+  }
+};
+
+// ================= REMOVE FROM CART =================
+const removeFromCart = async (req, res) => {
+  try {
+    const { productId, size } = req.body;
+
+    const cart = await Cart.findOne({ user: req.user._id });
+
+    if (!cart) {
+      return res.status(404).json({
+        message: "Cart not found",
+      });
+    }
+
+    cart.items = cart.items.filter(
+      (item) =>
+        !(
+          item.product.toString() === productId &&
+          item.size === size
+        )
+    );
+
+    await cart.save();
+
+    res.json(cart);
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to remove item",
+    });
+  }
+};
+
 module.exports = {
   addToCart,
   getMyCart,
+  updateCartItem,
+  removeFromCart,
 };

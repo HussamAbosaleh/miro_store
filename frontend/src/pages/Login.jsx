@@ -1,71 +1,131 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import "./Login.css";
 
 function Login() {
-  const { login, user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [error, setError] = useState("");
+const [loading, setLoading] = useState(false);
 
-  // لو المستخدم مسجل دخول لا تسمح له بالبقاء في صفحة login
-  if (user) {
-    navigate("/");
-  }
+const { login } = useContext(AuthContext);
+const navigate = useNavigate();
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setError(null);
+const submitHandler = async (e) => {
 
-    try {
-      const res = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+e.preventDefault();
 
-      const data = await res.json();
+setError("");
+setLoading(true);
 
-      if (res.ok) {
-        login(data);
-        navigate("/");
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      setError("Something went wrong");
-    }
-  };
+try {
 
-  return (
-    <div>
-      <h2>Login</h2>
+const res = await fetch("http://localhost:5000/api/users/login", {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+},
+body: JSON.stringify({ email, password }),
+});
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+const data = await res.json();
 
-      <form onSubmit={submitHandler}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+if (res.ok) {
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+login(data);
+navigate("/");
 
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
+} else {
+
+setError(data.message || "Login failed");
+
+}
+
+} catch {
+
+setError("Server error. Try again.");
+
+} finally {
+
+setLoading(false);
+
+}
+
+};
+
+return (
+
+<div className="login-container">
+
+{/* LEFT IMAGE */}
+
+<div className="login-image">
+
+<div className="login-overlay">
+
+<h1>Welcome Back</h1>
+<p>Discover minimalist fashion designed for everyday life</p>
+
+</div>
+
+</div>
+
+{/* RIGHT FORM */}
+
+<div className="login-form">
+
+<div className="form-box">
+
+<h2>Login</h2>
+
+{error && <p className="login-error">{error}</p>}
+
+<form onSubmit={submitHandler}>
+
+<input
+type="email"
+placeholder="Email"
+value={email}
+onChange={(e) => setEmail(e.target.value)}
+required
+/>
+
+<input
+type="password"
+placeholder="Password"
+value={password}
+onChange={(e) => setPassword(e.target.value)}
+required
+/>
+
+<button type="submit" disabled={loading}>
+
+{loading ? "Logging in..." : "Login"}
+
+</button>
+
+</form>
+
+<div className="login-links">
+
+<Link to="/forgot">Forgot password?</Link>
+
+<p>
+Don't have an account? <Link to="/register">Register</Link>
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+);
+
 }
 
 export default Login;

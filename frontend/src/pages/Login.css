@@ -1,0 +1,168 @@
+.login-container{
+display:grid;
+grid-template-columns:1fr 1fr;
+height:100vh;
+font-family:Arial, Helvetica, sans-serif;
+overflow:hidden;
+}
+
+/* LEFT IMAGE */
+
+.login-image{
+background-image:url("https://images.unsplash.com/photo-1520975916090-3105956dac38");
+background-size:cover;
+background-position:center;
+position:relative;
+
+border-top-right-radius:40px;
+border-bottom-right-radius:40px;
+overflow:hidden;
+}
+
+.login-overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.45);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+color:white;
+text-align:center;
+padding:40px;
+}
+
+.login-overlay h1{
+font-size:48px;
+margin-bottom:10px;
+}
+
+.login-overlay p{
+font-size:18px;
+opacity:0.9;
+}
+
+/* RIGHT SIDE */
+
+.login-form{
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:linear-gradient(
+to right,
+rgba(255,255,255,0.7),
+#f8f8f8
+);
+
+backdrop-filter:blur(6px);
+}
+
+/* FORM BOX */
+
+.form-box{
+width:420px;
+background:white;
+padding:50px;
+
+border-radius:12px;
+
+box-shadow:0 20px 50px rgba(0,0,0,0.08);
+
+transition:0.3s;
+}
+
+.form-box:hover{
+transform:translateY(-5px);
+}
+
+/* TITLE */
+
+.form-box h2{
+font-size:28px;
+margin-bottom:30px;
+text-align:center;
+}
+
+/* INPUT */
+
+.form-box input{
+width:100%;
+padding:14px;
+margin-bottom:15px;
+
+border:1px solid #ddd;
+border-radius:6px;
+
+font-size:15px;
+transition:0.25s;
+}
+
+.form-box input:focus{
+outline:none;
+border-color:black;
+box-shadow:0 0 0 2px rgba(0,0,0,0.08);
+}
+
+/* BUTTON */
+
+.form-box button{
+width:100%;
+padding:14px;
+
+background:black;
+color:white;
+
+border:none;
+border-radius:6px;
+
+font-size:16px;
+font-weight:bold;
+
+cursor:pointer;
+
+transition:0.25s;
+}
+
+.form-box button:hover{
+background:#222;
+transform:translateY(-1px);
+}
+
+/* LINKS */
+
+.login-links{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+
+font-size:14px;
+text-align:center;
+}
+
+.login-links a{
+color:black;
+text-decoration:none;
+font-weight:500;
+transition:0.2s;
+}
+
+.login-links a:hover{
+opacity:0.7;
+}
+
+/* ERROR */
+
+.login-error{
+color:red;
+margin-bottom:15px;
+font-size:14px;
+text-align:center;
+}

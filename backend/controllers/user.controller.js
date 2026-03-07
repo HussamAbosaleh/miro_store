@@ -8,8 +8,14 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const normalizeEmail = (value) => String(value || "").trim().toLowerCase();
 const normalizeName = (value) => String(value || "").trim();
 
+
+// --------------------
+// REGISTER
+// --------------------
+
 const registerUser = async (req, res) => {
   try {
+
     const name = normalizeName(req.body.name);
     const email = normalizeEmail(req.body.email);
     const password = String(req.body.password || "");
@@ -23,10 +29,13 @@ const registerUser = async (req, res) => {
     }
 
     if (password.length < MIN_PASSWORD_LENGTH) {
-      return res.status(400).json({ message: `Password must be at least ${MIN_PASSWORD_LENGTH} characters` });
+      return res.status(400).json({
+        message: `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+      });
     }
 
     const existingUser = await User.findOne({ email });
+
     if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
     }
@@ -36,7 +45,7 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password: hashedPassword,
+      password: hashedPassword
     });
 
     return res.status(201).json({
@@ -45,36 +54,40 @@ const registerUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role,
-      },
+        role: user.role
+      }
     });
-  } catch (error) {
-    if (error?.code === 11000) {
-      return res.status(400).json({ message: "Email already exists" });
-    }
 
-    if (process.env.NODE_ENV !== "production") {
-      console.error("registerUser error:", error);
-    }
+  } catch (error) {
+
+    console.error("registerUser error:", error);
 
     return res.status(500).json({ message: "Server error" });
   }
 };
 
+
+// --------------------
+// LOGIN
+// --------------------
+
 const loginUser = async (req, res) => {
   try {
+
     const email = normalizeEmail(req.body.email);
     const password = String(req.body.password || "");
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res.status(400).json({
+        message: "Email and password are required"
+      });
     }
 
     if (!EMAIL_REGEX.test(email)) {
       return res.status(400).json({ message: "Invalid email format" });
     }
 
-    const user = await User.findOne({ email: email }).select("+password");
+    const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -86,9 +99,11 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
     return res.status(200).json({
       message: "Login successful",
@@ -97,16 +112,88 @@ const loginUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role,
-      },
+        role: user.role
+      }
     });
+
   } catch (error) {
-    if (process.env.NODE_ENV !== "production") {
-      console.error("loginUser error:", error);
-    }
+
+    console.error("loginUser error:", error);
 
     return res.status(500).json({ message: "Server error" });
   }
 };
 
-module.exports = { registerUser, loginUser };
+
+// --------------------
+// FORGOT PASSWORD
+// --------------------
+
+const forgotPassword = async (req, res) => {
+  try {
+
+    const email = normalizeEmail(req.body.email);
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.json({
+      message: "Reset link sent to your email (demo)"
+    });
+
+  } catch (error) {
+
+    console.error("forgotPassword error:", error);
+
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+// --------------------
+// RESET PASSWORD
+// --------------------
+
+const resetPassword = async (req, res) => {
+  try {
+
+    const { password } = req.body;
+
+    if (!password) {
+      return res.status(400).json({ message: "Password is required" });
+    }
+
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      return res.status(400).json({
+        message: `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    return res.json({
+      message: "Password reset successful"
+    });
+
+  } catch (error) {
+
+    console.error("resetPassword error:", error);
+
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+module.exports = {
+  registerUser,
+  loginUser,
+  forgotPassword,
+  resetPassword
+};

@@ -1,0 +1,242 @@
+.product-wrapper{
+max-width:1200px;
+margin:auto;
+padding:40px 30px;
+}
+
+/* TOP SECTION */
+
+.product-top{
+display:grid;
+grid-template-columns:1fr 420px;
+gap:40px;
+align-items:start;
+}
+
+/* IMAGE SECTION */
+
+.gallery{
+display:flex;
+flex-direction:column;
+align-items:center;
+overflow:hidden;
+}
+
+.main-image{
+width:100%;
+max-width:450px;
+border-radius:10px;
+object-fit:cover;
+cursor:zoom-in;
+transition:transform .35s ease;
+}
+
+.main-image:hover{
+transform:scale(1.1);
+}
+
+/* THUMBNAILS */
+
+.thumbs{
+display:flex;
+gap:12px;
+margin-top:15px;
+}
+
+.thumbs img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:8px;
+cursor:pointer;
+opacity:.6;
+transition:.2s;
+}
+
+.thumbs img:hover{
+opacity:1;
+transform:scale(1.05);
+}
+
+.active-thumb{
+opacity:1;
+border:2px solid black;
+}
+
+/* PRODUCT INFO */
+
+.product-info{
+display:flex;
+flex-direction:column;
+gap:16px;
+position:sticky;
+top:100px;
+}
+
+.product-info h1{
+font-size:30px;
+font-weight:600;
+}
+
+.price{
+font-size:22px;
+font-weight:600;
+}
+
+.short-desc{
+color:#666;
+line-height:1.6;
+max-width:350px;
+}
+
+/* SIZE */
+
+.sizes{
+margin-top:10px;
+}
+
+.sizes button{
+margin-right:6px;
+padding:10px 14px;
+border:1px solid #ddd;
+background:white;
+cursor:pointer;
+transition:.2s;
+}
+
+.sizes button:hover{
+border-color:black;
+}
+
+.sizes .active{
+background:black;
+color:white;
+}
+
+.sizes button:disabled{
+opacity:.35;
+cursor:not-allowed;
+}
+
+/* QUANTITY */
+
+.qty{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:10px;
+}
+
+.qty button{
+width:32px;
+height:32px;
+border:1px solid #ccc;
+background:white;
+cursor:pointer;
+}
+
+.qty span{
+min-width:20px;
+text-align:center;
+}
+
+/* ADD CART */
+
+.add-cart{
+margin-top:10px;
+padding:14px;
+background:black;
+color:white;
+border:none;
+cursor:pointer;
+font-weight:500;
+transition:.2s;
+}
+
+.add-cart:hover{
+background:#222;
+}
+
+/* STOCK */
+
+.stock{
+font-size:14px;
+color:#777;
+}
+
+/* SHIPPING */
+
+.shipping-info{
+margin-top:20px;
+padding-top:15px;
+border-top:1px solid #eee;
+font-size:14px;
+color:#555;
+line-height:1.7;
+}
+
+/* DESCRIPTION FULL WIDTH */
+
+.product-description{
+margin-top:70px;
+border-top:1px solid #eee;
+padding-top:30px;
+max-width:900px;
+}
+
+.product-description h3{
+font-size:20px;
+margin-bottom:12px;
+}
+
+.product-description p{
+color:#444;
+line-height:1.7;
+}
+
+/* RELATED PRODUCTS */
+
+.related{
+margin-top:80px;
+}
+
+.related-grid{
+display:flex;
+gap:20px;
+margin-top:20px;
+}
+
+.related-grid img{
+width:200px;
+border-radius:10px;
+cursor:pointer;
+transition:.2s;
+}
+
+.related-grid img:hover{
+transform:scale(1.05);
+}
+
+.product-nav{
+display:flex;
+gap:15px;
+padding:20px 40px;
+}
+
+.back-btn,
+.home-btn{
+background:#111;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+font-weight:500;
+transition:0.2s;
+}
+
+.back-btn:hover,
+.home-btn:hover{
+background:black;
+transform:translateY(-2px);
+}

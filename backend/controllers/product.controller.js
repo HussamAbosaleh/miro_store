@@ -47,7 +47,7 @@ const createProduct = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const page = normalizePositiveInt(req.query.page, 1);
-    const limit = normalizePositiveInt(req.query.limit, 6);
+    const limit = normalizePositiveInt(req.query.limit, 25);
     const skip = (page - 1) * limit;
 
     const filter = { isActive: true };
