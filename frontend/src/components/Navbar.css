@@ -1,5 +1,7 @@
+/* ================= NAVBAR ================= */
+
 .navbar{
-position:fixed;
+position:sticky;
 top:0;
 left:0;
 width:100%;
@@ -15,7 +17,8 @@ transition:0.35s ease;
 z-index:1000;
 }
 
-/* عند السكروول */
+
+/* ================= SCROLL EFFECT ================= */
 
 .navbar.scrolled{
 background:rgba(0,0,0,0.9);
@@ -23,7 +26,8 @@ backdrop-filter:blur(10px);
 box-shadow:0 5px 20px rgba(0,0,0,0.25);
 }
 
-/* CONTAINER */
+
+/* ================= CONTAINER ================= */
 
 .nav-container{
 width:100%;
@@ -33,13 +37,11 @@ margin:auto;
 display:flex;
 align-items:center;
 justify-content:space-between;
-
 padding:0 40px;
-
-position:relative; /* مهم لتوسيط القائمة */
 }
 
-/* LOGO */
+
+/* ================= LOGO ================= */
 
 .logo img{
 height:58px;
@@ -47,14 +49,12 @@ width:auto;
 display:block;
 }
 
-/* MENU CENTER */
+
+/* ================= CENTER MENU ================= */
 
 .nav-links{
-position:absolute;
-left:50%;
-transform:translateX(-50%);
-
 display:flex;
+align-items:center;
 gap:40px;
 }
 
@@ -68,6 +68,7 @@ position:relative;
 
 transition:0.25s;
 }
+
 
 /* underline animation */
 
@@ -89,22 +90,29 @@ transition:0.3s;
 width:100%;
 }
 
-/* RIGHT SIDE */
+
+/* ================= RIGHT SIDE ================= */
 
 .nav-right{
 display:flex;
 align-items:center;
-gap:20px;
+gap:14px;
 }
 
-/* CART */
+
+/* ================= CART ================= */
 
 .cart{
 position:relative;
+
 font-size:22px;
 color:white;
 
-display:inline-block;
+display:flex;
+align-items:center;
+justify-content:center;
+
+cursor:pointer;
 
 transition:0.25s;
 }
@@ -113,10 +121,12 @@ transition:0.25s;
 transform:scale(1.15);
 }
 
-/* CART BADGE */
+
+/* ================= CART BADGE ================= */
 
 .cart-badge{
 position:absolute;
+
 top:-6px;
 right:-8px;
 
@@ -128,40 +138,73 @@ font-weight:bold;
 
 padding:3px 6px;
 
-border-radius:50%;
+border-radius:20px;
+
+min-width:18px;
+text-align:center;
 
 line-height:1;
 }
 
-/* LOGIN BUTTON */
 
-.login{
+/* ================= LOGIN / PROFILE BUTTON ================= */
+
+.login,
+.logout-btn{
+
 background:white;
 color:black;
 
-padding:9px 20px;
+padding:8px 16px;
 
 border-radius:6px;
 
 font-weight:600;
+font-size:14px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+height:36px;
+
+text-decoration:none;
+
+border:none;
 
 transition:0.25s;
 }
 
-.login:hover{
-background:black;
-color:white;
 
-transform:translateY(-2px);
-}
+/* ================= HOVER ================= */
 
-.logout-btn{
-background:white;
-border:none;
-cursor:pointer;
-}
-
+.login:hover,
 .logout-btn:hover{
 background:black;
 color:white;
+transform:translateY(-2px);
+cursor:pointer;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:900px){
+
+.nav-links{
+gap:25px;
+}
+
+.nav-container{
+padding:0 20px;
+}
+
+}
+
+@media (max-width:600px){
+
+.nav-links{
+display:none;
+}
+
 }

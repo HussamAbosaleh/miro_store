@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { CartContext } from "../context/CartContext";
 import "./ProductDetails.css";
 
 function ProductDetails() {
@@ -9,14 +8,15 @@ function ProductDetails() {
 const { id } = useParams();
 const navigate = useNavigate();
 
-const { user } = useContext(AuthContext);
-const { addToCart: addToCartContext } = useContext(CartContext);
+const { user, token } = useContext(AuthContext);
 
 const [product, setProduct] = useState(null);
 const [selectedImage, setSelectedImage] = useState(null);
 const [size, setSize] = useState("");
 const [quantity, setQuantity] = useState(1);
 const [message, setMessage] = useState("");
+
+/* ================= FETCH PRODUCT ================= */
 
 useEffect(() => {
 
@@ -30,9 +30,11 @@ setSelectedImage(data.images?.[0]);
 
 }, [id]);
 
+/* ================= ADD TO CART ================= */
+
 const addToCart = async () => {
 
-if (!user) {
+if (!user || !token) {
 setMessage("Please login first");
 return;
 }
@@ -48,7 +50,7 @@ const res = await fetch("http://localhost:5000/api/cart/add", {
 method: "POST",
 headers: {
 "Content-Type": "application/json",
-Authorization: `Bearer ${user.token}`,
+Authorization: `Bearer ${token}`,
 },
 body: JSON.stringify({
 productId: product._id,
@@ -60,24 +62,17 @@ quantity,
 const data = await res.json();
 
 if (!res.ok) {
-setMessage(data.message);
-} else {
+setMessage(data.message || "Failed to add to cart");
+return;
+}
 
 setMessage("Product added to cart");
 
-addToCartContext({
-_id: product._id,
-name: product.name,
-price: product.price,
-image: product.images?.[0],
-size,
-quantity,
-});
+} catch (err) {
 
-}
-
-} catch {
+console.error(err);
 setMessage("Something went wrong");
+
 }
 
 };
@@ -91,7 +86,7 @@ return (
 
 <div className="product-wrapper">
 
-{/* TOP NAVIGATION */}
+{/* TOP NAV */}
 
 <div className="product-nav">
 
@@ -107,7 +102,7 @@ Home
 
 <div className="product-top">
 
-{/* IMAGE SECTION */}
+{/* IMAGE */}
 
 <div className="gallery">
 
@@ -147,11 +142,13 @@ onClick={() => setSelectedImage(img)}
 Premium cotton clothing designed for everyday comfort.
 </p>
 
-{/* SIZE SELECTOR */}
+{/* SIZE */}
 
 <div className="sizes">
 
 <h4>Select size</h4>
+
+<div className="sizes-row">
 
 {product.sizes?.map((s) => (
 
@@ -165,6 +162,8 @@ onClick={() => setSize(s.size)}
 </button>
 
 ))}
+
+</div>
 
 </div>
 
@@ -198,7 +197,7 @@ onClick={() => setQuantity(quantity + 1)}
 
 {/* ADD TO CART */}
 
-<button className="add-cart" onClick={addToCart}>
+<button className="product-add-cart" onClick={addToCart}>
 Add to Cart
 </button>
 

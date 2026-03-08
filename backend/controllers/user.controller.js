@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 const MIN_PASSWORD_LENGTH = 8;
@@ -138,14 +139,29 @@ const forgotPassword = async (req, res) => {
       return res.status(400).json({ message: "Email is required" });
     }
 
+    if (!EMAIL_REGEX.test(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const hashedResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    user.resetToken = hashedResetToken;
+    user.resetTokenExpire = Date.now() + 15 * 60 * 1000;
+    await user.save();
+
     return res.json({
-      message: "Reset link sent to your email (demo)"
+      message: "Reset link sent to your email (demo)",
+      resetToken
     });
 
   } catch (error) {
@@ -164,7 +180,12 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
 
+    const { token } = req.params;
     const { password } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ message: "Reset token is required" });
+    }
 
     if (!password) {
       return res.status(400).json({ message: "Password is required" });
@@ -176,7 +197,25 @@ const resetPassword = async (req, res) => {
       });
     }
 
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      resetToken: hashedToken,
+      resetTokenExpire: { $gt: Date.now() }
+    }).select("+password");
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired reset token" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    user.resetToken = undefined;
+    user.resetTokenExpire = undefined;
+    await user.save();
 
     return res.json({
       message: "Password reset successful"

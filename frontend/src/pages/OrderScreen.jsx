@@ -1,50 +1,214 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import "./OrderScreen.css";
 
 function OrderScreen() {
-  const { id } = useParams();
-  const { user } = useContext(AuthContext);
-  const [order, setOrder] = useState(null);
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      const res = await fetch(
-        `http://localhost:5000/api/orders/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+const { id } = useParams();
+const { token } = useContext(AuthContext);
 
-      const data = await res.json();
-      setOrder(data);
-    };
+const [order, setOrder] = useState(null);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
+const [paypalId, setPaypalId] = useState("");
 
-    fetchOrder();
-  }, [id, user]);
+/* ================= FETCH ORDER ================= */
 
-  if (!order) return <h2>Loading...</h2>;
+useEffect(() => {
 
-  return (
-    <div>
-      <h2>Order Details</h2>
+const fetchOrder = async () => {
 
-      {order.orderItems.map((item) => (
-        <div key={item.product + item.size}>
-          <h4>{item.name}</h4>
-          <p>Size: {item.size}</p>
-          <p>Quantity: {item.quantity}</p>
-          <p>Price: {item.price} €</p>
-        </div>
-      ))}
+if (!token) {
+setError("Not logged in");
+setLoading(false);
+return;
+}
 
-      <h3>Total: {order.totalPrice} €</h3>
-      <p>Payment: {order.isPaid ? "Paid" : "Not Paid"}</p>
-      <p>Delivery: {order.isDelivered ? "Delivered" : "Not Delivered"}</p>
-    </div>
-  );
+try {
+
+const res = await fetch(`http://localhost:5000/api/orders/${id}`, {
+headers: {
+Authorization: `Bearer ${token}`
+}
+});
+
+const data = await res.json();
+
+if (res.ok) {
+setOrder(data);
+} else {
+setError(data.message || "Failed to load order");
+}
+
+} catch {
+setError("Failed to load order");
+}
+
+setLoading(false);
+};
+
+fetchOrder();
+
+}, [id, token]);
+
+
+
+/* ================= FETCH PAYPAL CLIENT ================= */
+
+useEffect(() => {
+
+const getPaypalId = async () => {
+
+try {
+
+const res = await fetch("http://localhost:5000/api/config/paypal");
+const data = await res.text();
+
+setPaypalId(data);
+
+} catch {
+console.log("PayPal client load failed");
+}
+
+};
+
+getPaypalId();
+
+}, []);
+
+
+
+/* ================= PAYPAL SUCCESS ================= */
+
+const successPaymentHandler = async (details) => {
+
+try {
+
+const res = await fetch(`http://localhost:5000/api/orders/${order._id}/pay`, {
+
+method: "PUT",
+
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`
+},
+
+body: JSON.stringify(details)
+
+});
+
+const data = await res.json();
+
+if (res.ok) {
+setOrder(data);
+} else {
+setError(data.message || "Payment update failed");
+}
+
+} catch {
+setError("Payment failed");
+}
+
+};
+
+
+
+/* ================= UI ================= */
+
+if (loading)
+return <p style={{ padding: "120px" }}>Loading order...</p>;
+
+if (error)
+return <p style={{ padding: "120px" }}>{error}</p>;
+
+if (!order)
+return <p style={{ padding: "120px" }}>Order not found</p>;
+
+return (
+
+<div className="order-page">
+
+<h1>Order Details</h1>
+
+<div className="order-box">
+
+<p><strong>Order ID:</strong> {order._id}</p>
+
+<p>
+<strong>Status:</strong>
+{order.isPaid ? " Paid" : " Not Paid"}
+</p>
+
+</div>
+
+<h2>Items</h2>
+
+{order.orderItems.map((item, index) => (
+
+<div className="order-box" key={index}>
+
+<p><strong>{item.name}</strong></p>
+<p>Size: {item.size}</p>
+<p>Quantity: {item.quantity}</p>
+<p>Price: {item.price} €</p>
+
+</div>
+
+))}
+
+<div className="order-box">
+
+<h3>Total: {order.totalPrice} €</h3>
+
+</div>
+
+
+{/* PAYPAL BUTTON */}
+
+{!order.isPaid && paypalId && (
+
+<div className="paypal-box">
+
+<PayPalScriptProvider options={{ "client-id": paypalId }}>
+
+<PayPalButtons
+
+createOrder={(data, actions) => {
+
+return actions.order.create({
+purchase_units: [
+{
+amount: {
+value: order.totalPrice
+}
+}
+]
+});
+
+}}
+
+onApprove={(data, actions) => {
+
+return actions.order.capture().then(function (details) {
+successPaymentHandler(details);
+});
+
+}}
+
+></PayPalButtons>
+
+</PayPalScriptProvider>
+
+</div>
+
+)}
+
+</div>
+
+);
+
 }
 
 export default OrderScreen;

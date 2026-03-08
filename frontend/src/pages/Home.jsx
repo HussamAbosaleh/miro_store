@@ -45,15 +45,7 @@ src={`http://localhost:5000${product.images?.[0]}`}
 alt={product.name}
 />
 
-<button
-className="add-cart"
-onClick={(e)=>{
-e.preventDefault();
-addToCart(product);
-}}
->
-Add to Cart
-</button>
+
 
 </div>
 

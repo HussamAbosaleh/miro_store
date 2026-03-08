@@ -2,186 +2,249 @@ const Cart = require("../models/cart");
 const Product = require("../models/Product");
 const mongoose = require("mongoose");
 
+
 // ================= ADD TO CART =================
 const addToCart = async (req, res) => {
-  try {
-    const { productId, size, quantity } = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ message: "Invalid productId" });
-    }
+try {
 
-    if (!size || typeof size !== "string") {
-      return res.status(400).json({ message: "Size is required" });
-    }
+const { productId, size, quantity } = req.body;
 
-    const qty = Number(quantity);
-    if (!Number.isInteger(qty) || qty < 1) {
-      return res.status(400).json({ message: "Quantity must be >= 1" });
-    }
+const pid = String(productId);
 
-    const product = await Product.findById(productId);
-    if (!product || product.isActive === false) {
-      return res.status(404).json({ message: "Product not found" });
-    }
+if (!mongoose.Types.ObjectId.isValid(pid)) {
+return res.status(400).json({ message: "Invalid productId" });
+}
 
-    const sizeObj = product.sizes?.find((s) => s.size === size);
-    if (!sizeObj) {
-      return res.status(400).json({ message: "Size not available" });
-    }
+if (!size) {
+return res.status(400).json({ message: "Size is required" });
+}
 
-    let cart = await Cart.findOne({ user: req.user._id });
+const qty = Number(quantity);
 
-    if (!cart) {
-      cart = await Cart.create({
-        user: req.user._id,
-        items: [],
-      });
-    }
+if (!Number.isInteger(qty) || qty < 1) {
+return res.status(400).json({ message: "Quantity must be >= 1" });
+}
 
-    const existingIndex = cart.items.findIndex(
-      (it) => it.product.toString() === productId && it.size === size
-    );
+const product = await Product.findById(pid);
 
-    const image =
-      product.images?.[0] || "/uploads/products/default.png";
+if (!product || product.isActive === false) {
+return res.status(404).json({ message: "Product not found" });
+}
 
-    if (existingIndex >= 0) {
-      const currentQty = cart.items[existingIndex].quantity;
-      const newQty = currentQty + qty;
+const sizeObj = product.sizes?.find(s => s.size === size);
 
-      if (newQty > sizeObj.stock) {
-        return res.status(400).json({ message: "Not enough stock" });
-      }
+if (!sizeObj) {
+return res.status(400).json({ message: "Size not available" });
+}
 
-      cart.items[existingIndex].quantity = newQty;
-    } else {
-      if (qty > sizeObj.stock) {
-        return res.status(400).json({ message: "Not enough stock" });
-      }
+let cart = await Cart.findOne({ user: req.user._id });
 
-      cart.items.push({
-        product: product._id,
-        name: product.name,
-        price: product.price,
-        image,
-        size,
-        quantity: qty,
-      });
-    }
+if (!cart) {
+cart = await Cart.create({
+user: req.user._id,
+items: []
+});
+}
 
-    await cart.save();
+const existingIndex = cart.items.findIndex(it =>
+String(it.product) === pid && it.size === size
+);
 
-    res.status(200).json(cart);
+const image = product.images?.[0] || "/uploads/products/default.png";
 
-  } catch (error) {
-    res.status(500).json({ message: "Failed to add to cart" });
-  }
+
+if (existingIndex >= 0) {
+
+const newQty = cart.items[existingIndex].quantity + qty;
+
+if (newQty > sizeObj.stock) {
+return res.status(400).json({ message: "Not enough stock" });
+}
+
+cart.items[existingIndex].quantity = newQty;
+
+} else {
+
+if (qty > sizeObj.stock) {
+return res.status(400).json({ message: "Not enough stock" });
+}
+
+cart.items.push({
+product: product._id,
+name: product.name,
+price: product.price,
+image,
+size,
+quantity: qty
+});
+
+}
+
+await cart.save();
+
+const updatedCart = await Cart.findOne({ user: req.user._id }).populate(
+"items.product",
+"name price images sizes"
+);
+
+res.json(updatedCart);
+
+} catch (error) {
+
+res.status(500).json({ message: "Failed to add to cart" });
+
+}
+
 };
+
+
 
 // ================= GET MY CART =================
 const getMyCart = async (req, res) => {
-  try {
-    const cart = await Cart.findOne({
-      user: req.user._id,
-    }).populate("items.product", "name price images sizes");
 
-    if (!cart) {
-      return res.json({
-        user: req.user._id,
-        items: [],
-      });
-    }
+try {
 
-    res.json(cart);
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to fetch cart",
-    });
-  }
+const cart = await Cart.findOne({
+user: req.user._id
+}).populate("items.product", "name price images sizes");
+
+if (!cart) {
+return res.json({
+user: req.user._id,
+items: []
+});
+}
+
+res.json(cart);
+
+} catch {
+
+res.status(500).json({
+message: "Failed to fetch cart"
+});
+
+}
+
 };
+
+
 
 // ================= UPDATE CART ITEM =================
 const updateCartItem = async (req, res) => {
-  try {
-    const { productId, size, quantity } = req.body;
 
-    const qty = Number(quantity);
+try {
 
-    if (!Number.isInteger(qty) || qty < 1) {
-      return res.status(400).json({
-        message: "Quantity must be >= 1",
-      });
-    }
+const { productId, size, quantity } = req.body;
 
-    const cart = await Cart.findOne({ user: req.user._id });
+const pid = String(productId);
+const qty = Number(quantity);
 
-    if (!cart) {
-      return res.status(404).json({
-        message: "Cart not found",
-      });
-    }
+if (!Number.isInteger(qty) || qty < 1) {
+return res.status(400).json({
+message: "Quantity must be >= 1"
+});
+}
 
-    const item = cart.items.find(
-      (it) =>
-        it.product.toString() === productId &&
-        it.size === size
-    );
+const cart = await Cart.findOne({ user: req.user._id });
 
-    if (!item) {
-      return res.status(404).json({
-        message: "Item not found in cart",
-      });
-    }
+if (!cart) {
+return res.status(404).json({
+message: "Cart not found"
+});
+}
 
-    item.quantity = qty;
+const item = cart.items.find(it =>
+String(it.product) === pid && it.size === size
+);
 
-    await cart.save();
+if (!item) {
+return res.status(404).json({
+message: "Item not found in cart"
+});
+}
 
-    res.json(cart);
+/* تحقق من المخزون */
 
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to update cart",
-    });
-  }
+const product = await Product.findById(pid);
+const sizeObj = product.sizes?.find(s => s.size === size);
+
+if (!sizeObj || qty > sizeObj.stock) {
+return res.status(400).json({
+message: "Not enough stock"
+});
+}
+
+item.quantity = qty;
+
+await cart.save();
+
+const updatedCart = await Cart.findOne({ user: req.user._id }).populate(
+"items.product",
+"name price images sizes"
+);
+
+res.json(updatedCart);
+
+} catch {
+
+res.status(500).json({
+message: "Failed to update cart"
+});
+
+}
+
 };
+
+
 
 // ================= REMOVE FROM CART =================
 const removeFromCart = async (req, res) => {
-  try {
-    const { productId, size } = req.body;
 
-    const cart = await Cart.findOne({ user: req.user._id });
+try {
 
-    if (!cart) {
-      return res.status(404).json({
-        message: "Cart not found",
-      });
-    }
+const { productId, size } = req.body;
 
-    cart.items = cart.items.filter(
-      (item) =>
-        !(
-          item.product.toString() === productId &&
-          item.size === size
-        )
-    );
+const pid = String(productId);
 
-    await cart.save();
+const cart = await Cart.findOne({
+user: req.user._id
+});
 
-    res.json(cart);
+if (!cart) {
+return res.status(404).json({
+message: "Cart not found"
+});
+}
 
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to remove item",
-    });
-  }
+cart.items = cart.items.filter(item =>
+!(String(item.product) === pid && item.size === size)
+);
+
+await cart.save();
+
+const updatedCart = await Cart.findOne({ user: req.user._id }).populate(
+"items.product",
+"name price images sizes"
+);
+
+res.json(updatedCart);
+
+} catch {
+
+res.status(500).json({
+message: "Failed to remove item"
+});
+
+}
+
 };
 
+
+
 module.exports = {
-  addToCart,
-  getMyCart,
-  updateCartItem,
-  removeFromCart,
+addToCart,
+getMyCart,
+updateCartItem,
+removeFromCart
 };

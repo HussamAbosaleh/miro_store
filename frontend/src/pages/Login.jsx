@@ -22,7 +22,7 @@ setLoading(true);
 
 try {
 
-const res = await fetch("http://localhost:5000/api/users/login", {
+const res = await fetch("http://localhost:5000/api/auth/login", {
 method: "POST",
 headers: {
 "Content-Type": "application/json",
@@ -34,8 +34,11 @@ const data = await res.json();
 
 if (res.ok) {
 
+/* حفظ المستخدم والتوكن */
 login(data);
-navigate("/");
+
+/* التوجيه للبروفايل */
+navigate("/profile");
 
 } else {
 
@@ -43,8 +46,9 @@ setError(data.message || "Login failed");
 
 }
 
-} catch {
+} catch (err) {
 
+console.error(err);
 setError("Server error. Try again.");
 
 } finally {
@@ -60,7 +64,6 @@ return (
 <div className="login-container">
 
 {/* LEFT IMAGE */}
-
 <div className="login-image">
 
 <div className="login-overlay">
@@ -73,7 +76,6 @@ return (
 </div>
 
 {/* RIGHT FORM */}
-
 <div className="login-form">
 
 <div className="form-box">
@@ -101,16 +103,14 @@ required
 />
 
 <button type="submit" disabled={loading}>
-
 {loading ? "Logging in..." : "Login"}
-
 </button>
 
 </form>
 
 <div className="login-links">
 
-<Link to="/forgot">Forgot password?</Link>
+<Link to="/forgot-password">Forgot password?</Link>
 
 <p>
 Don't have an account? <Link to="/register">Register</Link>

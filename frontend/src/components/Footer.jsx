@@ -1,38 +1,104 @@
+import logo from "../assets/logo-footer.png";
 import "./Footer.css";
 
-function Footer(){
+function Footer() {
+  return (
+    <footer className="footer">
 
-return(
+      <div className="footer-wrapper">
 
-<footer className="footer">
+        <div className="footer-container">
 
-<div>
+          {/* Brand */}
 
-<h4>Miro</h4>
-<p>Minimal everyday clothing.</p>
+          <div className="footer-brand">
 
-</div>
+            <img src={logo} className="footer-logo" alt="Miro" />
 
-<div>
+            <p className="footer-description">
+              Designed with intention. Built to last.
+            </p>
 
-<h4>Shop</h4>
-<p>Men</p>
-<p>Women</p>
+            <p className="footer-location">
+              Düsseldorf — Germany
+            </p>
 
-</div>
+            <div className="footer-social">
 
-<div>
+              <a href="#">Instagram</a>
+              <a href="#">TikTok</a>
+              <a href="#">Facebook</a>
 
-<h4>Support</h4>
-<p>Shipping</p>
-<p>Returns</p>
+            </div>
 
-</div>
+          </div>
 
-</footer>
 
-)
+          {/* Explore */}
 
+          <div className="footer-links">
+
+            <h3>Explore</h3>
+
+            <a href="/">Home</a>
+            <a href="/men">Men</a>
+            <a href="/women">Women</a>
+            <a href="/contact">Contact</a>
+
+          </div>
+
+
+          {/* Legal */}
+
+          <div className="footer-links">
+
+            <h3>Legal</h3>
+
+            <a href="#">Legal Notice</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Refund Policy</a>
+            <a href="#">Shipping Policy</a>
+            <a href="#">Terms Of Service</a>
+
+          </div>
+
+
+          {/* Newsletter */}
+
+          <div className="footer-newsletter">
+
+            <h3>Newsletter</h3>
+
+            <p>
+              Subscribe for new collections and offers.
+            </p>
+
+            <div className="newsletter-box">
+
+              <input
+                type="email"
+                placeholder="Your email"
+              />
+
+              <button>
+                Subscribe
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div className="footer-bottom">
+          © 2026 MIRO. All rights reserved
+        </div>
+
+      </div>
+
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;

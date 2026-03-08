@@ -1,0 +1,66 @@
+/* ================= PAGE ================= */
+
+.order-page{
+max-width:650px;
+margin:120px auto;
+padding:30px;
+background:#ffffff;
+border-radius:12px;
+box-shadow:0 8px 30px rgba(0,0,0,0.08);
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ================= TITLES ================= */
+
+.order-page h1{
+font-size:26px;
+margin-bottom:25px;
+font-weight:600;
+}
+
+.order-page h2{
+margin-top:30px;
+margin-bottom:15px;
+font-size:20px;
+}
+
+/* ================= BOX ================= */
+
+.order-box{
+background:#f9f9f9;
+padding:18px;
+margin-bottom:15px;
+border-radius:10px;
+border:1px solid #eee;
+}
+
+/* ================= ITEM ================= */
+
+.order-box p{
+margin:4px 0;
+font-size:15px;
+}
+
+/* ================= TOTAL ================= */
+
+.order-box h3{
+margin:0;
+font-size:18px;
+}
+
+/* ================= PAYPAL ================= */
+
+.paypal-box{
+margin-top:20px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+.order-page{
+margin:90px 15px;
+padding:20px;
+}
+
+}
