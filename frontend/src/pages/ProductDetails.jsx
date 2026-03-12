@@ -5,243 +5,276 @@ import "./ProductDetails.css";
 
 function ProductDetails() {
 
-const { id } = useParams();
-const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { user, token } = useContext(AuthContext);
 
-const { user, token } = useContext(AuthContext);
+  const [product, setProduct] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [message, setMessage] = useState("");
 
-const [product, setProduct] = useState(null);
-const [selectedImage, setSelectedImage] = useState(null);
-const [size, setSize] = useState("");
-const [quantity, setQuantity] = useState(1);
-const [message, setMessage] = useState("");
+  /* ================= FETCH PRODUCT ================= */
 
-/* ================= FETCH PRODUCT ================= */
+  useEffect(() => {
 
-useEffect(() => {
+    fetch(`http://localhost:5000/api/products/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProduct(data);
+        setSelectedImage(data.images?.[0]);
+      })
+      .catch(() => setMessage("Failed to load product"));
 
-fetch(`http://localhost:5000/api/products/${id}`)
-.then((res) => res.json())
-.then((data) => {
-setProduct(data);
-setSelectedImage(data.images?.[0]);
-})
-.catch(() => setMessage("Failed to load product"));
+  }, [id]);
 
-}, [id]);
 
-/* ================= ADD TO CART ================= */
 
-const addToCart = async () => {
+  /* ================= QUANTITY ================= */
 
-if (!user || !token) {
-setMessage("Please login first");
-return;
-}
+  const increaseQty = () => {
+    setQuantity(quantity + 1);
+  };
 
-if (!size) {
-setMessage("Select a size");
-return;
-}
+  const decreaseQty = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
-try {
 
-const res = await fetch("http://localhost:5000/api/cart/add", {
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Bearer ${token}`,
-},
-body: JSON.stringify({
-productId: product._id,
-size,
-quantity,
-}),
-});
 
-const data = await res.json();
+  /* ================= ADD TO CART ================= */
 
-if (!res.ok) {
-setMessage(data.message || "Failed to add to cart");
-return;
-}
+  const addToCart = async () => {
 
-setMessage("Product added to cart");
+    if (!user || !token) {
+      setMessage("Please login first");
+      navigate("/login");
+      return;
+    }
 
-} catch (err) {
+    if (!size) {
+      setMessage("Please select a size");
+      return;
+    }
 
-console.error(err);
-setMessage("Something went wrong");
+    try {
 
-}
+      const res = await fetch("http://localhost:5000/api/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          productId: product._id,
+          size,
+          quantity,
+        }),
+      });
 
-};
+      const data = await res.json();
 
-if (!product) return <p>Loading...</p>;
+      if (!res.ok) {
+        setMessage(data.message || "Failed to add to cart");
+        return;
+      }
 
-const selectedSizeStock =
-product.sizes?.find((s) => s.size === size)?.stock;
+      navigate("/cart");
 
-return (
+    } catch (err) {
 
-<div className="product-wrapper">
+      console.error(err);
+      setMessage("Something went wrong");
 
-{/* TOP NAV */}
+    }
 
-<div className="product-nav">
+  };
 
-<button className="back-btn" onClick={() => navigate(-1)}>
-← Back
-</button>
 
-<button className="home-btn" onClick={() => navigate("/")}>
-Home
-</button>
 
-</div>
+  if (!product) {
+    return (
+      <div style={{ padding: "120px", textAlign: "center" }}>
+        Loading product...
+      </div>
+    );
+  }
 
-<div className="product-top">
 
-{/* IMAGE */}
 
-<div className="gallery">
+  return (
 
-<img
-className="main-image"
-src={`http://localhost:5000${selectedImage}`}
-alt={product.name}
-/>
+    <div className="product-wrapper">
 
-<div className="thumbs">
+      {/* ================= TOP NAV ================= */}
 
-{product.images?.map((img) => (
+      <div className="product-nav">
 
-<img
-key={img}
-src={`http://localhost:5000${img}`}
-alt=""
-className={selectedImage === img ? "active-thumb" : ""}
-onClick={() => setSelectedImage(img)}
-/>
+        <button
+          className="back-btn"
+          onClick={() => navigate(-1)}
+        >
+          ← Back
+        </button>
 
-))}
+        <button
+          className="home-btn"
+          onClick={() => navigate("/")}
+        >
+          Home
+        </button>
 
-</div>
+      </div>
 
-</div>
 
-{/* PRODUCT INFO */}
 
-<div className="product-info">
+      <div className="product-top">
 
-<h1>{product.name}</h1>
+        {/* ================= IMAGE GALLERY ================= */}
 
-<p className="price">{product.price} €</p>
+        <div className="gallery">
 
-<p className="short-desc">
-Premium cotton clothing designed for everyday comfort.
-</p>
+          <img
+            className="main-image"
+            src={`http://localhost:5000${selectedImage}`}
+            alt={product.name}
+          />
 
-{/* SIZE */}
+          <div className="thumbs">
 
-<div className="sizes">
+            {product.images?.map((img) => (
 
-<h4>Select size</h4>
+              <img
+                key={img}
+                src={`http://localhost:5000${img}`}
+                alt=""
+                className={selectedImage === img ? "active-thumb" : ""}
+                onClick={() => setSelectedImage(img)}
+              />
 
-<div className="sizes-row">
+            ))}
 
-{product.sizes?.map((s) => (
+          </div>
 
-<button
-key={s.size}
-disabled={s.stock === 0}
-className={size === s.size ? "active" : ""}
-onClick={() => setSize(s.size)}
->
-{s.size}
-</button>
+        </div>
 
-))}
 
-</div>
 
-</div>
+        {/* ================= PRODUCT INFO ================= */}
 
-{/* STOCK */}
+        <div className="product-info">
 
-{size && (
-<p className="stock">
-{selectedSizeStock} left in stock
-</p>
-)}
+          <h1>{product.name}</h1>
 
-{/* QUANTITY */}
+          <p className="price">{product.price} €</p>
 
-<div className="qty">
+          <p className="short-desc">
+            {product.category}
+          </p>
 
-<button
-onClick={() => setQuantity(Math.max(1, quantity - 1))}
->
--
-</button>
 
-<span>{quantity}</span>
 
-<button
-onClick={() => setQuantity(quantity + 1)}
->
-+
-</button>
+          {/* ================= SIZE ================= */}
 
-</div>
+          <div className="sizes">
 
-{/* ADD TO CART */}
+            <h4>Select size</h4>
 
-<button className="product-add-cart" onClick={addToCart}>
-Add to Cart
-</button>
+            <div className="sizes-row">
 
-{message && <p className="msg">{message}</p>}
+              {product.sizes?.map((s) => (
 
-{/* SHIPPING */}
+                <button
+                  key={s.size}
+                  className={size === s.size ? "active" : ""}
+                  onClick={() => {
+                    setSize(s.size);
+                    setQuantity(1);
+                  }}
+                >
+                  {s.size}
+                </button>
 
-<div className="shipping-info">
+              ))}
 
-<p>🚚 Delivery: 4–7 business days (Germany & EU)</p>
+            </div>
 
-<p>📦 Shipping: Germany Free · EU €9.90 (Free over €99)</p>
+          </div>
 
-<p>✔ 14-day return policy (EU law)</p>
 
-</div>
 
-</div>
+          {/* ================= QUANTITY ================= */}
 
-</div>
+          <div className="qty">
 
-{/* DESCRIPTION */}
+            <button onClick={decreaseQty}>
+              -
+            </button>
 
-<div className="product-description">
+            <span>{quantity}</span>
 
-<h3>Product Details</h3>
+            <button onClick={increaseQty}>
+              +
+            </button>
 
-<p>
-Crestay Essential Hoodie designed for everyday wear —
-defined by simplicity, balance, and quiet confidence.
+          </div>
 
-Crafted from premium materials (80% cotton, 20% polyester)
-with a 280 g/m² fabric weight and double-stitched seams
-for durability.
 
-Soft brushed interior for comfort and a regular unisex
-fit designed for everyday wearability.
-</p>
 
-</div>
+          {/* ================= ADD TO CART ================= */}
 
-</div>
+          <button
+            className="product-add-cart"
+            onClick={addToCart}
+            disabled={!size}
+          >
+            Add to Cart
+          </button>
 
-);
+          {message && <p className="msg">{message}</p>}
+
+
+
+          {/* ================= SHIPPING ================= */}
+
+          <div className="shipping-info">
+
+            <p>🚚 Delivery: 4–7 business days (Germany & EU)</p>
+
+            <p>📦 Shipping: Germany Free · EU €9.90 (Free over €99)</p>
+
+            <p>✔ 14-day return policy (EU law)</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      {/* ================= PRODUCT DETAILS ================= */}
+
+      <div className="product-description">
+
+        <h3>Product Details</h3>
+
+        <p>
+          {product.description} ·
+          Material: {product.material} ·
+          Fit: {product.fit} ·
+          Fabric weight: {product.fabricWeight} ·
+          Care: {product.care}
+        </p>
+
+      </div>
+
+    </div>
+
+  );
 
 }
 

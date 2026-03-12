@@ -1,7 +1,10 @@
 import "./Hero.css";
 import heroImage from "../assets/hero.png";
+import { useNavigate } from "react-router-dom";
 
 function Hero(){
+
+const navigate = useNavigate();
 
 return(
 
@@ -19,7 +22,9 @@ Timeless essentials designed for everyday life.
 Clean design. Premium comfort.
 </p>
 
-<button>Shop Collection</button>
+<button onClick={()=>navigate("/men")}>
+Shop Collection
+</button>
 
 </div>
 

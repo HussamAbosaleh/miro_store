@@ -1,103 +1,164 @@
 import logo from "../assets/logo-footer.png";
 import "./Footer.css";
+import { Link } from "react-router-dom";
+import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaApplePay } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="footer">
 
-      <div className="footer-wrapper">
+<footer className="footer">
 
-        <div className="footer-container">
+<div className="footer-wrapper">
 
-          {/* Brand */}
+{/* ================= MAIN FOOTER ================= */}
 
-          <div className="footer-brand">
+<div className="footer-container">
 
-            <img src={logo} className="footer-logo" alt="Miro" />
+{/* BRAND */}
 
-            <p className="footer-description">
-              Designed with intention. Built to last.
-            </p>
+<div className="footer-brand">
 
-            <p className="footer-location">
-              Düsseldorf — Germany
-            </p>
+<img src={logo} className="footer-logo" alt="Miro" />
 
-            <div className="footer-social">
+<p className="footer-description">
+Timeless minimal clothing designed for everyday comfort.
+</p>
 
-              <a href="#">Instagram</a>
-              <a href="#">TikTok</a>
-              <a href="#">Facebook</a>
+<p className="footer-location">
+Düsseldorf — Germany
+</p>
 
-            </div>
+<div className="footer-social">
 
-          </div>
+<a
+href="https://instagram.com"
+target="_blank"
+rel="noopener noreferrer"
+>
+Instagram
+</a>
 
+<a
+href="https://tiktok.com"
+target="_blank"
+rel="noopener noreferrer"
+>
+TikTok
+</a>
 
-          {/* Explore */}
+<a
+href="https://facebook.com"
+target="_blank"
+rel="noopener noreferrer"
+>
+Facebook
+</a>
 
-          <div className="footer-links">
+</div>
 
-            <h3>Explore</h3>
-
-            <a href="/">Home</a>
-            <a href="/men">Men</a>
-            <a href="/women">Women</a>
-            <a href="/contact">Contact</a>
-
-          </div>
-
-
-          {/* Legal */}
-
-          <div className="footer-links">
-
-            <h3>Legal</h3>
-
-            <a href="#">Legal Notice</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Refund Policy</a>
-            <a href="#">Shipping Policy</a>
-            <a href="#">Terms Of Service</a>
-
-          </div>
+</div>
 
 
-          {/* Newsletter */}
+{/* EXPLORE */}
 
-          <div className="footer-newsletter">
+<div className="footer-links">
 
-            <h3>Newsletter</h3>
+<h3>Explore</h3>
 
-            <p>
-              Subscribe for new collections and offers.
-            </p>
+<Link to="/">Home</Link>
+<Link to="/men">Men</Link>
+<Link to="/women">Women</Link>
+<Link to="/contact">Contact</Link>
 
-            <div className="newsletter-box">
-
-              <input
-                type="email"
-                placeholder="Your email"
-              />
-
-              <button>
-                Subscribe
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
+</div>
 
 
-        <div className="footer-bottom">
-          © 2026 MIRO. All rights reserved
-        </div>
+{/* LEGAL */}
 
-      </div>
+<div className="footer-links">
 
-    </footer>
+<h3>Legal</h3>
+
+<Link to="/legal">Legal Notice</Link>
+<Link to="/privacy">Privacy Policy</Link>
+<Link to="/refund">Refund Policy</Link>
+<Link to="/shipping">Shipping Policy</Link>
+<Link to="/terms">Terms of Service</Link>
+
+</div>
+
+
+{/* NEWSLETTER */}
+
+<div className="footer-newsletter">
+
+<h3>Newsletter</h3>
+
+<p>
+Subscribe for new collections and exclusive offers.
+</p>
+
+<div className="newsletter-box">
+
+<input
+type="email"
+placeholder="Your email"
+/>
+
+<button>
+Subscribe
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+{/* ================= BOTTOM ================= */}
+
+<div className="footer-bottom">
+
+<p>© 2026 MIRO. All rights reserved</p>
+
+<div className="footer-bottom-bar">
+
+{/* PAYMENTS */}
+
+<div className="footer-payments">
+
+<FaCcVisa />
+<FaCcMastercard />
+<FaCcPaypal />
+<FaApplePay />
+
+</div>
+
+{/* LANGUAGE */}
+
+<div className="footer-settings">
+
+<select>
+<option>English</option>
+<option>Deutsch</option>
+</select>
+
+<select>
+<option>EUR €</option>
+<option>USD $</option>
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</footer>
+
   );
 }
 

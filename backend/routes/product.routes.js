@@ -6,23 +6,57 @@ const {
   getProducts,
   getProductById,
   updateProduct,
-  updateProductSizes,
   deleteProduct,
-  addProductReview,
+  addProductReview
 } = require("../controllers/product.controller");
 
 const { protect } = require("../middleware/auth.middleware");
 const { adminOnly } = require("../middleware/admin.middleware");
 
-// PUBLIC
+const upload = require("../middleware/upload");
+
+/* ================= PUBLIC ================= */
+
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 
-// ADMIN
-router.post("/", protect, adminOnly, createProduct);
-router.put("/:id", protect, adminOnly, updateProduct);
-router.put("/:id/sizes", protect, adminOnly, updateProductSizes);
-router.delete("/:id", protect, adminOnly, deleteProduct);
-router.post("/:id/reviews", protect, addProductReview);
+/* ================= ADMIN ================= */
+
+/* CREATE PRODUCT */
+
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  upload.array("images", 5),
+  createProduct
+);
+
+/* UPDATE PRODUCT */
+
+router.put(
+  "/:id",
+  protect,
+  adminOnly,
+  upload.array("images", 5),
+  updateProduct
+);
+
+/* DELETE PRODUCT */
+
+router.delete(
+  "/:id",
+  protect,
+  adminOnly,
+  deleteProduct
+);
+
+/* ================= REVIEWS ================= */
+
+router.post(
+  "/:id/reviews",
+  protect,
+  addProductReview
+);
 
 module.exports = router;

@@ -46,7 +46,8 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      role: "user"
     });
 
     return res.status(201).json({
@@ -62,8 +63,8 @@ const registerUser = async (req, res) => {
   } catch (error) {
 
     console.error("registerUser error:", error);
-
     return res.status(500).json({ message: "Server error" });
+
   }
 };
 
@@ -120,8 +121,8 @@ const loginUser = async (req, res) => {
   } catch (error) {
 
     console.error("loginUser error:", error);
-
     return res.status(500).json({ message: "Server error" });
+
   }
 };
 
@@ -150,6 +151,7 @@ const forgotPassword = async (req, res) => {
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
+
     const hashedResetToken = crypto
       .createHash("sha256")
       .update(resetToken)
@@ -157,6 +159,7 @@ const forgotPassword = async (req, res) => {
 
     user.resetToken = hashedResetToken;
     user.resetTokenExpire = Date.now() + 15 * 60 * 1000;
+
     await user.save();
 
     return res.json({
@@ -167,8 +170,8 @@ const forgotPassword = async (req, res) => {
   } catch (error) {
 
     console.error("forgotPassword error:", error);
-
     return res.status(500).json({ message: "Server error" });
+
   }
 };
 
@@ -208,13 +211,17 @@ const resetPassword = async (req, res) => {
     }).select("+password");
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired reset token" });
+      return res.status(400).json({
+        message: "Invalid or expired reset token"
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     user.password = hashedPassword;
     user.resetToken = undefined;
     user.resetTokenExpire = undefined;
+
     await user.save();
 
     return res.json({
@@ -224,8 +231,8 @@ const resetPassword = async (req, res) => {
   } catch (error) {
 
     console.error("resetPassword error:", error);
-
     return res.status(500).json({ message: "Server error" });
+
   }
 };
 

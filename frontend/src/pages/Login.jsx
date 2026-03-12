@@ -37,8 +37,12 @@ if (res.ok) {
 /* حفظ المستخدم والتوكن */
 login(data);
 
-/* التوجيه للبروفايل */
+/* توجيه حسب الدور */
+if (data.user.role === "admin") {
+navigate("/admin");
+} else {
 navigate("/profile");
+}
 
 } else {
 
@@ -63,19 +67,13 @@ return (
 
 <div className="login-container">
 
-{/* LEFT IMAGE */}
 <div className="login-image">
-
 <div className="login-overlay">
-
 <h1>Welcome Back</h1>
 <p>Discover minimalist fashion designed for everyday life</p>
-
+</div>
 </div>
 
-</div>
-
-{/* RIGHT FORM */}
 <div className="login-form">
 
 <div className="form-box">

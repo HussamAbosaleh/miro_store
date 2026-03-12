@@ -4,54 +4,57 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
 
-const [user, setUser] = useState(null);
-const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-useEffect(() => {
+  useEffect(() => {
 
-const storedUser = localStorage.getItem("user");
-const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
 
-if (storedUser && storedUser !== "undefined") {
-try {
-setUser(JSON.parse(storedUser));
-} catch {
-setUser(null);
-}
-}
+    if (storedUser && storedUser !== "undefined") {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch {
+        setUser(null);
+      }
+    }
 
-if (storedToken) {
-setToken(storedToken);
-}
+    if (storedToken) {
+      setToken(storedToken);
+    }
 
-}, []);
+    setLoading(false);
 
-const login = (data) => {
+  }, []);
 
-setUser(data.user);
-setToken(data.token);
+  const login = (data) => {
 
-localStorage.setItem("user", JSON.stringify(data.user));
-localStorage.setItem("token", data.token);
+    setUser(data.user);
+    setToken(data.token);
 
-};
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
 
-const logout = () => {
+  };
 
-setUser(null);
-setToken(null);
+  const logout = () => {
 
-localStorage.removeItem("user");
-localStorage.removeItem("token");
+    setUser(null);
+    setToken(null);
 
-};
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
 
-return (
+  };
 
-<AuthContext.Provider value={{ user, token, login, logout }}>
-{children}
-</AuthContext.Provider>
+  return (
 
-);
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+      {children}
+    </AuthContext.Provider>
+
+  );
 
 }

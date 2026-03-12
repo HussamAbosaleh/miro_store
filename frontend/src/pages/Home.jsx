@@ -1,38 +1,95 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import Hero from "../components/Hero";
-import { CartContext } from "../context/CartContext";
 
 function Home() {
 
-const [featured, setFeatured] = useState([]);
-const [men, setMen] = useState([]);
-const [women, setWomen] = useState([]);
+const [featured,setFeatured] = useState([]);
+const [hoodies,setHoodies] = useState([]);
+const [sweats,setSweats] = useState([]);
 
-const { addToCart } = useContext(CartContext);
+const [loading,setLoading] = useState(true);
+const [error,setError] = useState(null);
 
-useEffect(() => {
+/* ================= LOAD PRODUCTS ================= */
 
-fetch("http://localhost:5000/api/products")
-.then(res => res.json())
-.then(data => {
+useEffect(()=>{
 
-const products = data.products;
+const fetchProducts = async()=>{
+
+try{
+
+const res = await fetch("http://localhost:5000/api/products");
+
+if(!res.ok){
+throw new Error("Failed to load products");
+}
+
+const data = await res.json();
+
+let products = data.products || [];
+
+/* newest first */
+
+products = products.sort(
+(a,b)=> new Date(b.createdAt) - new Date(a.createdAt)
+);
+
+/* FEATURED */
 
 setFeatured(products.slice(0,4));
-setMen(products.filter(p => p.gender === "men").slice(0,4));
-setWomen(products.filter(p => p.gender === "women").slice(0,4));
 
-});
+/* HOODIES */
 
-}, []);
+setHoodies(
+products
+.filter(p => p.category === "hoodies")
+.slice(0,4)
+);
 
-const renderProducts = (list) => (
+/* SWEATSHIRTS */
+
+setSweats(
+products
+.filter(p => p.category === "sweatshirts")
+.slice(0,4)
+);
+
+}catch(err){
+
+console.error(err);
+setError("Failed to load products");
+
+}finally{
+
+setLoading(false);
+
+}
+
+};
+
+fetchProducts();
+
+},[]);
+
+
+/* ================= PRODUCT CARD ================= */
+
+const renderProducts = (list)=>{
+
+return(
 
 <div className="grid">
 
-{list.map(product => (
+{list.map(product=>{
+
+const image =
+product.images && product.images.length > 0
+? `http://localhost:5000${product.images[0]}`
+: "https://via.placeholder.com/400x500";
+
+return(
 
 <div key={product._id} className="card">
 
@@ -41,17 +98,16 @@ const renderProducts = (list) => (
 <div className="image-box">
 
 <img
-src={`http://localhost:5000${product.images?.[0]}`}
+src={image}
 alt={product.name}
 />
-
-
 
 </div>
 
 <div className="card-info">
 
 <h4>{product.name}</h4>
+
 <span>{product.price} €</span>
 
 </div>
@@ -60,13 +116,28 @@ alt={product.name}
 
 </div>
 
-))}
+)
+
+})}
 
 </div>
 
-);
+)
 
-return (
+};
+
+
+/* ================= UI ================= */
+
+if(loading){
+return <p style={{padding:"120px"}}>Loading...</p>
+}
+
+if(error){
+return <p style={{padding:"120px"}}>{error}</p>
+}
+
+return(
 
 <>
 
@@ -74,32 +145,115 @@ return (
 
 <div className="home-wrapper">
 
+
+{/* ================= COLLECTIONS ================= */}
+
+{/* ================= COLLECTIONS ================= */}
+
+<section className="collections">
+
+<Link to="/men" className="collection-card men">
+
+<div className="collection-overlay">
+<h2>Men Collection</h2>
+<p>Streetwear essentials for everyday style</p>
+<span className="shop-btn">Shop Now</span>
+</div>
+
+</Link>
+
+<Link to="/women" className="collection-card women">
+
+<div className="collection-overlay">
+<h2>Women Collection</h2>
+<p>Comfortable and modern designs</p>
+<span className="shop-btn">Shop Now</span>
+</div>
+
+</Link>
+
+</section>
+
+{/* ================= FEATURED ================= */}
+
 <section className="section">
 
-<h2>Featured</h2>
+<div className="section-header">
+
+<h2>Featured Products</h2>
+
+<Link to="/men" className="view-all">
+View All
+</Link>
+
+</div>
+
 {renderProducts(featured)}
 
 </section>
 
-<section className="section">
 
-<h2>Men</h2>
-{renderProducts(men)}
 
-</section>
+{/* ================= HOODIES ================= */}
 
 <section className="section">
 
-<h2>Women</h2>
-{renderProducts(women)}
+<div className="section-header">
+
+<h2>Hoodies</h2>
+
+<Link to="/men" className="view-all">
+View All
+</Link>
+
+</div>
+
+{renderProducts(hoodies)}
 
 </section>
+
+
+
+{/* ================= SWEATSHIRTS ================= */}
+
+<section className="section">
+
+<div className="section-header">
+
+<h2>Sweatshirts</h2>
+
+<Link to="/men" className="view-all">
+View All
+</Link>
+
+</div>
+
+{renderProducts(sweats)}
+
+</section>
+
+
+
+{/* ================= PROMO BANNER ================= */}
+
+<section className="promo-banner">
+
+<h2>Free Shipping on Orders Over €99</h2>
+
+<p>Premium streetwear designed for everyday comfort.</p>
+
+<Link to="/men" className="banner-btn">
+Shop Now
+</Link>
+
+</section>
+
 
 </div>
 
 </>
 
-);
+)
 
 }
 

@@ -4,9 +4,9 @@ const User = require("../models/User");
 
 /* ===== Generate JWT ===== */
 
-const generateToken = (id) => {
+const generateToken = (id, role) => {
   return jwt.sign(
-    { id },
+    { id, role },
     process.env.JWT_SECRET,
     { expiresIn: "30d" }
   );
@@ -20,7 +20,7 @@ const loginUser = async (req, res) => {
 
     const { email, password } = req.body;
 
-    /* تحقق من المدخلات */
+    /* التحقق من المدخلات */
 
     if (!email || !password) {
       return res.status(400).json({
@@ -38,14 +38,6 @@ const loginUser = async (req, res) => {
       });
     }
 
-    /* تأكد أن password موجود */
-
-    if (!user.password) {
-      return res.status(500).json({
-        message: "User password missing in database"
-      });
-    }
-
     /* مقارنة كلمة المرور */
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -56,15 +48,21 @@ const loginUser = async (req, res) => {
       });
     }
 
+    /* إنشاء التوكن */
+
+    const role = user.role || "user";
+    const token = generateToken(user._id, role);
+
     /* إرسال الرد */
 
-    res.json({
+    res.status(200).json({
       user: {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role
       },
-      token: generateToken(user._id)
+      token
     });
 
   } catch (error) {
@@ -72,7 +70,7 @@ const loginUser = async (req, res) => {
     console.error("Login error:", error);
 
     res.status(500).json({
-      message: "Login failed"
+      message: "Server error"
     });
 
   }
