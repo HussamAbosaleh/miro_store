@@ -1,29 +1,8 @@
-Miro Store Backend API
+MIRO Store — Backend API
 
-Backend API for the Miro Store e-commerce project.
+Backend API for the MIRO Store e-commerce project.
 
-Built with:
-
-- Node.js
-- Express
-- MongoDB
-- JWT Authentication
-- PayPal Sandbox
-
----
-
-Overview
-
-The backend provides the core API for an online clothing store.
-
-It handles:
-
-- User authentication
-- Product management
-- Cart and orders
-- PayPal sandbox payments
-- Product reviews (only for verified purchases)
-- Admin dashboard statistics
+This service provides the core functionality for the online clothing store including authentication, product management, orders, and payments.
 
 ---
 
@@ -37,6 +16,19 @@ Tech Stack
 
 ---
 
+Overview
+
+The backend API powers the e-commerce platform and manages:
+
+- User authentication
+- Product management
+- Cart and orders
+- PayPal sandbox payments
+- Product reviews (only for verified purchases)
+- Admin dashboard statistics
+
+---
+
 Features
 
 User
@@ -47,23 +39,17 @@ User
   - Filtering (gender, category, price)
   - Sorting (price, newest)
 - Create orders
-- Pay orders using PayPal sandbox
-- Leave product reviews (only if purchased)
+- Pay orders using PayPal Sandbox
+- Leave product reviews (only if the product was purchased)
 
 Admin
 
 - Create products
-
 - Update products
-
 - Soft delete products
-
 - Manage product sizes and stock
-
 - View all orders
-
 - View dashboard statistics:
-  
   - Total users
   - Total products
   - Total orders
@@ -74,7 +60,8 @@ Admin
 
 Project Structure
 
-backend/
+backend
+│
 ├── controllers
 ├── models
 ├── routes
@@ -95,7 +82,7 @@ PAYPAL_CLIENT_ID=your_paypal_client_id
 
 ---
 
-Run Backend
+Run the Backend
 
 Install dependencies:
 
@@ -115,7 +102,7 @@ API Base URL
 
 http://localhost:5000/api
 
-Example endpoints:
+Example Endpoints
 
 Method| Endpoint| Description
 POST| /api/users/login| Login user

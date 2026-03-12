@@ -1,8 +1,8 @@
-Miro Store
+MIRO Store
 
-Full Stack E-commerce project built with the MERN Stack.
+Full-stack e-commerce web application built using the MERN stack.
 
-This project simulates an online clothing store with authentication, product management, cart system, and order processing.
+This project simulates a modern online clothing store with authentication, product management, cart system, and order processing.
 
 ---
 
@@ -18,7 +18,7 @@ Frontend
 Backend
 
 - Node.js
-- Express
+- Express.js
 - MongoDB
 - JWT Authentication
 - PayPal Sandbox
@@ -31,10 +31,10 @@ User
 
 - Register / Login
 - Browse products
-- Product details
+- Product details page
 - Add products to cart
 - Checkout and create orders
-- Pay with PayPal sandbox
+- Pay using PayPal Sandbox
 - Leave reviews for purchased products
 
 Admin
@@ -50,7 +50,7 @@ Admin
 
 Project Structure
 
-miro_store/
+miro_store
 │
 ├── backend
 │   ├── controllers
@@ -67,7 +67,7 @@ miro_store/
 
 ---
 
-Run the Project
+Running the Project
 
 Backend
 
@@ -75,7 +75,7 @@ cd backend
 npm install
 npm run dev
 
-Runs on
+Backend runs on:
 
 http://localhost:5000
 
@@ -87,13 +87,15 @@ cd frontend
 npm install
 npm run dev
 
-Runs on
+Frontend runs on:
 
 http://localhost:5173
 
 ---
 
 Documentation
+
+Additional documentation is available inside each service:
 
 Backend documentation
 
@@ -102,3 +104,9 @@ backend/README.md
 Frontend documentation
 
 frontend/README.md
+
+---
+
+Author
+
+Mohamad Hussam Abosaleh

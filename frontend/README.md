@@ -1,8 +1,12 @@
-# Miro Store Frontend
+MIRO Store — Frontend
 
-This is the frontend of the Miro Store e-commerce project.
+Frontend application for the MIRO Store e-commerce project.
 
-## Tech Stack
+Built using modern React tools and designed to provide a responsive and user-friendly shopping experience.
+
+---
+
+Tech Stack
 
 - React
 - Vite
@@ -10,17 +14,53 @@ This is the frontend of the Miro Store e-commerce project.
 - Context API
 - CSS
 
-## Features
+---
 
-- Product listing
+Features
+
+- Product listing page
 - Product details page
-- User login
-- Protected routes
-- Cart page
+- User authentication interface
+- Protected routes for authenticated users
+- Shopping cart page
 - Checkout integration
+- Responsive UI for desktop and mobile
 
-## Run Frontend
+---
 
-```bash
+Project Structure
+
+src
+│
+├── assets
+├── components
+├── context
+├── pages
+├── services
+└── App.jsx
+
+---
+
+Run the Frontend
+
+Install dependencies
+
 npm install
+
+Start development server
+
 npm run dev
+
+The frontend will run on:
+
+http://localhost:5173
+
+---
+
+Notes
+
+This frontend communicates with the backend API running on:
+
+http://localhost:5000
+
+Make sure the backend server is running before using the application.
