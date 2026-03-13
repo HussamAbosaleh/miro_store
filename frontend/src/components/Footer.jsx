@@ -10,7 +10,7 @@ function Footer() {
 
 <div className="footer-wrapper">
 
-{/* ================= MAIN FOOTER ================= */}
+{/* ================= الفوتر ================= */}
 
 <div className="footer-container">
 

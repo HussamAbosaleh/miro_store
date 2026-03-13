@@ -16,7 +16,7 @@ const orderItemSchema = new mongoose.Schema({
   },
   size: {
     type: String,
-    required: true, // 🔥 مهم جداً
+    required: true, // snapshot **
   },
   quantity: {
     type: Number,

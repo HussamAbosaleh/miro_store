@@ -13,7 +13,7 @@ const { adminOnly } = require("../middleware/admin.middleware");
 
 
 // --------------------
-// AUTH ROUTES
+// التحقق من صحة تسجيل الدخول
 // --------------------
 
 router.post("/register", registerUser);
@@ -21,7 +21,7 @@ router.post("/login", loginUser);
 
 
 // --------------------
-// PASSWORD RESET
+// استعادة كلمة المرور
 // --------------------
 
 router.post("/forgot-password", forgotPassword);
@@ -29,7 +29,7 @@ router.post("/reset-password/:token", resetPassword);
 
 
 // --------------------
-// USER PROFILE
+// بروفايل المستخدم
 // --------------------
 
 router.get("/profile", protect, (req, res) => {
@@ -38,7 +38,7 @@ res.json(req.user);
 
 
 // --------------------
-// ADMIN TEST ROUTE
+// اختبار صلاحيات الادمن
 // --------------------
 
 router.get("/admin-test", protect, adminOnly, (req, res) => {

@@ -5,7 +5,7 @@ const Cart = require("../models/cart");
 
 
 
-// ================== CREATE ORDER ==================
+// ================== انشاء طلب ==================
 const createOrder = async (req, res) => {
   try {
 
@@ -91,7 +91,7 @@ const createOrder = async (req, res) => {
 
 
 
-// ================== GET MY ORDERS ==================
+// ================== جلب الطلبات ==================
 const getMyOrders = async (req, res) => {
   try {
 
@@ -112,7 +112,7 @@ const getMyOrders = async (req, res) => {
 
 
 
-// ================== GET ORDER BY ID ==================
+// ================= جلب طلب بالمعرف ==================
 const getOrderById = async (req, res) => {
   try {
 
@@ -146,7 +146,7 @@ const getOrderById = async (req, res) => {
 
 
 
-// ================== GET ALL ORDERS (ADMIN) ==================
+// ================== (جلب جميع الطلبات (ادمن)) ==================
 const getAllOrders = async (req, res) => {
   try {
 
@@ -167,7 +167,7 @@ const getAllOrders = async (req, res) => {
 
 
 
-// ================== MARK ORDER AS PAID ==================
+// ================== تعيين طلب كمدفوع ==================
 const markOrderAsPaid = async (req, res) => {
   try {
 
@@ -225,7 +225,7 @@ const markOrderAsPaid = async (req, res) => {
 
 
 
-// ================== MARK ORDER AS DELIVERED ==================
+// ==================  تعيين طلب كمُسلَّم ==================
 const markOrderAsDelivered = async (req, res) => {
   try {
 

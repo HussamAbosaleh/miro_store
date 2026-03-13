@@ -10,16 +10,16 @@ const {
   removeFromCart
 } = require("../controllers/cart.controller");
 
-// get user cart
+// جلب سلة المستخدم الحالية
 router.get("/my", protect, getMyCart);
 
-// add item
+// اضافة منتج إلى السلة
 router.post("/add", protect, addToCart);
 
-// update quantity
+// تحديث كمية منتج في السلة
 router.put("/update", protect, updateCartItem);
 
-// remove item
+// حذف منتج من السلة
 router.delete("/remove", protect, removeFromCart);
 
 module.exports = router;

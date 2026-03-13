@@ -3,7 +3,7 @@ const Product = require("../models/Product");
 const mongoose = require("mongoose");
 
 
-// ================= ADD TO CART =================
+// ================= اضافة إلى السلة =================
 const addToCart = async (req, res) => {
 
 try {
@@ -100,7 +100,7 @@ res.status(500).json({ message: "Failed to add to cart" });
 
 
 
-// ================= GET MY CART =================
+// ================= جلب السلة =================
 const getMyCart = async (req, res) => {
 
 try {
@@ -130,7 +130,7 @@ message: "Failed to fetch cart"
 
 
 
-// ================= UPDATE CART ITEM =================
+// ================= تعديل عنصر السلة =================
 const updateCartItem = async (req, res) => {
 
 try {
@@ -164,7 +164,7 @@ message: "Item not found in cart"
 });
 }
 
-/* تحقق من المخزون */
+//=================* تحقق من المخزون *=================
 
 const product = await Product.findById(pid);
 const sizeObj = product.sizes?.find(s => s.size === size);
@@ -198,7 +198,7 @@ message: "Failed to update cart"
 
 
 
-// ================= REMOVE FROM CART =================
+// ================= حذف من السلة =================
 const removeFromCart = async (req, res) => {
 
 try {

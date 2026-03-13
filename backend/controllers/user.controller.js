@@ -70,7 +70,7 @@ const registerUser = async (req, res) => {
 
 
 // --------------------
-// LOGIN
+//تسجيل الدخول
 // --------------------
 
 const loginUser = async (req, res) => {
@@ -128,7 +128,7 @@ const loginUser = async (req, res) => {
 
 
 // --------------------
-// FORGOT PASSWORD
+//  نسيت كلمة المرور
 // --------------------
 
 const forgotPassword = async (req, res) => {
@@ -177,7 +177,7 @@ const forgotPassword = async (req, res) => {
 
 
 // --------------------
-// RESET PASSWORD
+//  استعادة تعيين كلمة المرور
 // --------------------
 
 const resetPassword = async (req, res) => {

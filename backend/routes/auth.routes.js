@@ -3,11 +3,11 @@ const router = express.Router();
 
 const { loginUser, forgotPassword } = require("../controllers/auth.controller");
 
-/* LOGIN */
+/* تسجيل الدخول */
 
 router.post("/login", loginUser);
 
-/* FORGOT PASSWORD */
+/* نسيت كلمة المرور */
 
 router.post("/forgot-password", forgotPassword);
 

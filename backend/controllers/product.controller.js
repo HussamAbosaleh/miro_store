@@ -12,7 +12,7 @@ const normalizePositiveInt = (value, fallback) => {
 };
 
 
-/* ================= CREATE PRODUCT ================= */
+/* ================= إنشاء منتج ================= */
 
 const createProduct = async (req, res) => {
 
@@ -72,7 +72,7 @@ const createProduct = async (req, res) => {
 };
 
 
-/* ================= GET PRODUCTS ================= */
+/* ================= جلب المنتجات ================= */
 
 const getProducts = async (req, res) => {
 
@@ -163,7 +163,7 @@ const getProducts = async (req, res) => {
 };
 
 
-/* ================= GET SINGLE PRODUCT ================= */
+/* ================= جلب منتج بالمعرف ================= */
 
 const getProductById = async (req, res) => {
 
@@ -191,7 +191,7 @@ const getProductById = async (req, res) => {
 };
 
 
-/* ================= UPDATE PRODUCT ================= */
+/* ================= تحديث المنتج ================= */
 
 const updateProduct = async (req, res) => {
 
@@ -239,7 +239,7 @@ const updateProduct = async (req, res) => {
 };
 
 
-/* ================= DELETE PRODUCT ================= */
+/* ================= حذف المنتج ================= */
 
 const deleteProduct = async (req, res) => {
 
@@ -271,7 +271,7 @@ const deleteProduct = async (req, res) => {
 };
 
 
-/* ================= ADD REVIEW ================= */
+/* ================= إضافة تقييم ================= */
 
 const addProductReview = async (req, res) => {
 

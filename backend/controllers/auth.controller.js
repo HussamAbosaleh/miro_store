@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const User = require("../models/User");
 
-/* ================= GENERATE JWT ================= */
+/* =========== انشاء توكن لتسجيل الدخول ========== */
 
 const generateToken = (id, role) => {
 
@@ -20,8 +20,7 @@ const generateToken = (id, role) => {
 };
 
 
-/* ================= LOGIN USER ================= */
-
+/* ========== تسجيل الدخول ========== */
 const loginUser = async (req, res) => {
 
   try {
@@ -90,7 +89,7 @@ const loginUser = async (req, res) => {
 };
 
 
-/* ================= FORGOT PASSWORD ================= */
+/* =========== نسيان كلمة المرور ============= */
 
 const forgotPassword = async (req, res) => {
 

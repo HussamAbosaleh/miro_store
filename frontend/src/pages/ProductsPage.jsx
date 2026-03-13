@@ -23,6 +23,10 @@ fetch(url)
 .then(data=>{
 setProducts(data.products || []);
 setLoading(false);
+})
+.catch(err=>{
+console.error(err);
+setLoading(false);
 });
 
 },[gender]);
@@ -48,6 +52,11 @@ product.images && product.images.length > 0
 ? `http://localhost:5000${product.images[0]}`
 : "https://via.placeholder.com/400x500";
 
+const rating =
+product.rating !== undefined
+? product.rating.toFixed(1)
+: "0.0";
+
 return(
 
 <div key={product._id} className="product-card">
@@ -59,6 +68,14 @@ return(
 <h4>{product.name}</h4>
 
 <p>{product.price} €</p>
+
+<p className="rating">
+⭐ {rating} / 5
+</p>
+
+<p className="reviews">
+{product.numReviews || 0} reviews
+</p>
 
 </Link>
 

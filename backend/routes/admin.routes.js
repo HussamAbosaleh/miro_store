@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-/* ================= CONTROLLERS ================= */
+/* ================= وحدة الإدارة ================= */
 
 const {
   getAdminStats,
@@ -10,16 +10,16 @@ const {
   deleteUser
 } = require("../controllers/admin.controller");
 
-/* ================= MIDDLEWARE ================= */
+/* ================= البرمجة ================= */
 
 const { protect } = require("../middleware/auth.middleware");
 const { adminOnly } = require("../middleware/admin.middleware");
 
-/* ================= ADMIN STATS ================= */
+/* ==============احصائيات الادمن  ================= */
 
 router.get("/stats", protect, adminOnly, getAdminStats);
 
-/* ================= USERS ================= */
+/* ================= مخطط المستخدمين ================= */
 
 /* get all users */
 

@@ -15,14 +15,14 @@ const { adminOnly } = require("../middleware/admin.middleware");
 
 const upload = require("../middleware/upload");
 
-/* ================= PUBLIC ================= */
+/* ================= الجميع ================= */
 
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 
-/* ================= ADMIN ================= */
+/* ================= الادمن ================= */
 
-/* CREATE PRODUCT */
+/* اضافة منتج */
 
 router.post(
   "/",
@@ -32,7 +32,7 @@ router.post(
   createProduct
 );
 
-/* UPDATE PRODUCT */
+/* تحديث المنتج */
 
 router.put(
   "/:id",
@@ -42,7 +42,7 @@ router.put(
   updateProduct
 );
 
-/* DELETE PRODUCT */
+/* حذف المنتج */
 
 router.delete(
   "/:id",
@@ -51,7 +51,7 @@ router.delete(
   deleteProduct
 );
 
-/* ================= REVIEWS ================= */
+/* ================= مخطط المراجعات ================= */
 
 router.post(
   "/:id/reviews",

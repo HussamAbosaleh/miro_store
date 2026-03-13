@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// ================= CART ITEM =================
+// ================= عناصر سلة التسوق =================
 
 const cartItemSchema = new mongoose.Schema(
 {
@@ -41,7 +41,7 @@ default: 1,
 );
 
 
-// ================= CART SCHEMA =================
+// ================= سلة التسوق =================
 
 const cartSchema = new mongoose.Schema(
 {

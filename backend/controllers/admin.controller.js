@@ -2,7 +2,7 @@ const User = require("../models/User");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 
-/* ================= ADMIN STATS ================= */
+/* ======= احصائيات الادمن ========== */
 
 const getAdminStats = async (req, res) => {
 
@@ -20,7 +20,7 @@ const totalPaidOrders = await Order.countDocuments({
 isPaid: true
 });
 
-/* ================= REVENUE ================= */
+/* ============= حساب الارباح ============ */
 
 const revenueData = await Order.aggregate([
 { $match: { isPaid: true } },
@@ -56,7 +56,7 @@ message:"Failed to fetch admin stats"
 };
 
 
-/* ================= GET ALL USERS ================= */
+/* ============= جلب المستخدمين ============ */
 
 const getAllUsers = async (req,res)=>{
 
@@ -81,7 +81,7 @@ message:"Failed to fetch users"
 };
 
 
-/* ================= UPDATE USER ROLE ================= */
+/* ========= تعديل صلاحيات المستخدم ========== */
 
 const updateUserRole = async (req,res)=>{
 
@@ -125,7 +125,7 @@ message:"Failed to update role"
 };
 
 
-/* ================= DELETE USER ================= */
+/* =========== حذف المستخدم ============== */
 
 const deleteUser = async (req,res)=>{
 

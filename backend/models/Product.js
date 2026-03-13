@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-/* ================= SIZE SCHEMA ================= */
+/* ================= مخطط الأحجام ================= */
 
 const sizeSchema = new mongoose.Schema(
 {
@@ -22,7 +22,7 @@ const sizeSchema = new mongoose.Schema(
 );
 
 
-/* ================= REVIEW SCHEMA ================= */
+/* ================= مخطط المراجعات ================= */
 
 const reviewSchema = new mongoose.Schema(
 {
@@ -56,7 +56,7 @@ const reviewSchema = new mongoose.Schema(
 );
 
 
-/* ================= PRODUCT SCHEMA ================= */
+/* ================= مخطط المنتج ================= */
 
 const productSchema = new mongoose.Schema(
 {
