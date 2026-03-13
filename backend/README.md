@@ -1,12 +1,12 @@
-MIRO Store — Backend API
+# MIRO Store — Backend API
 
-Backend API for the MIRO Store e-commerce project.
+Backend API for the **MIRO Store** e-commerce project.
 
 This service provides the core functionality for the online clothing store including authentication, product management, orders, and payments.
 
 ---
 
-Tech Stack
+## Tech Stack
 
 - Node.js
 - Express.js
@@ -16,7 +16,7 @@ Tech Stack
 
 ---
 
-Overview
+## Overview
 
 The backend API powers the e-commerce platform and manages:
 
@@ -29,9 +29,9 @@ The backend API powers the e-commerce platform and manages:
 
 ---
 
-Features
+## Features
 
-User
+### User
 
 - Register / Login (JWT authentication)
 - Browse products with:
@@ -42,7 +42,7 @@ User
 - Pay orders using PayPal Sandbox
 - Leave product reviews (only if the product was purchased)
 
-Admin
+### Admin
 
 - Create products
 - Update products
@@ -58,31 +58,31 @@ Admin
 
 ---
 
-Project Structure
+## Project Structure
 
-backend
-│
-├── controllers
-├── models
-├── routes
-├── middleware
-├── config
-└── server.js
-
----
-
-Environment Variables
-
-Create a ".env" file inside the backend folder:
-
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/miro_store
-JWT_SECRET=your_jwt_secret
-PAYPAL_CLIENT_ID=your_paypal_client_id
+backend  
+│  
+├── controllers  
+├── models  
+├── routes  
+├── middleware  
+├── config  
+└── server.js  
 
 ---
 
-Run the Backend
+## Environment Variables
+
+Create a `.env` file inside the **backend** folder:
+
+PORT=5000  
+MONGO_URI=mongodb://localhost:27017/miro_store  
+JWT_SECRET=your_jwt_secret  
+PAYPAL_CLIENT_ID=your_paypal_client_id  
+
+---
+
+## Run the Backend
 
 Install dependencies:
 
@@ -98,22 +98,24 @@ http://localhost:5000
 
 ---
 
-API Base URL
+## API Base URL
 
 http://localhost:5000/api
 
-Example Endpoints
+---
 
-Method| Endpoint| Description
-POST| /api/users/login| Login user
-POST| /api/users/register| Register user
-GET| /api/products| Get products
-POST| /api/orders| Create order
-GET| /api/orders/my| Get user orders
+## Example Endpoints
+
+Method | Endpoint | Description  
+POST | /api/users/login | Login user  
+POST | /api/users/register | Register user  
+GET | /api/products | Get products  
+POST | /api/orders | Create order  
+GET | /api/orders/my | Get user orders  
 
 ---
 
-Future Improvements
+## Future Improvements
 
 - Payment confirmation webhooks
 - Email order notifications

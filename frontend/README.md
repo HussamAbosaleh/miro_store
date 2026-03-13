@@ -1,12 +1,12 @@
-MIRO Store — Frontend
+# MIRO Store — Frontend
 
-Frontend application for the MIRO Store e-commerce project.
+Frontend application for the **MIRO Store** e-commerce project.
 
 Built using modern React tools and designed to provide a responsive and user-friendly shopping experience.
 
 ---
 
-Tech Stack
+## Tech Stack
 
 - React
 - Vite
@@ -16,7 +16,7 @@ Tech Stack
 
 ---
 
-Features
+## Features
 
 - Product listing page
 - Product details page
@@ -24,12 +24,14 @@ Features
 - Protected routes for authenticated users
 - Shopping cart page
 - Checkout integration
+- PayPal payment interface
 - Responsive UI for desktop and mobile
 
 ---
 
-Project Structure
+## Project Structure
 
+```
 src
 │
 ├── assets
@@ -38,29 +40,47 @@ src
 ├── pages
 ├── services
 └── App.jsx
+```
 
 ---
 
-Run the Frontend
+## Run the Frontend
 
-Install dependencies
+Install dependencies:
 
+```
 npm install
+```
 
-Start development server
+Start development server:
 
+```
 npm run dev
+```
 
 The frontend will run on:
 
+```
 http://localhost:5173
+```
 
 ---
 
-Notes
+## Backend Connection
 
 This frontend communicates with the backend API running on:
 
+```
 http://localhost:5000
+```
 
-Make sure the backend server is running before using the application.
+Make sure the **backend server is running** before using the application.
+
+---
+
+## Notes
+
+- Built with **Vite** for fast development and hot module replacement.
+- Uses **React Router** for client-side navigation.
+- Uses **Context API** for global state management (authentication and cart).
+- Designed to be responsive for both desktop and mobile devices.

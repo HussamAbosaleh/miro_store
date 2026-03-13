@@ -1,54 +1,51 @@
-MIRO Store
+# MIRO Store
 
 Full-stack e-commerce web application built using the MERN stack.
 
-This project simulates a modern online clothing store with authentication, product management, cart system, and order processing.
+This project simulates a modern online clothing store where users can browse products, manage a cart, place orders, and pay using PayPal. It also includes an admin dashboard for managing products and orders.
 
 ---
 
-Tech Stack
+## Tech Stack
 
-Frontend
-
+### Frontend
 - React (Vite)
 - React Router
 - Context API
 - CSS
 
-Backend
-
+### Backend
 - Node.js
 - Express.js
 - MongoDB
 - JWT Authentication
-- PayPal Sandbox
+- PayPal Sandbox API
 
 ---
 
-Features
+## Features
 
-User
-
-- Register / Login
+### User Features
+- Register and login
 - Browse products
-- Product details page
+- View product details
 - Add products to cart
 - Checkout and create orders
-- Pay using PayPal Sandbox
+- Pay with PayPal Sandbox
 - Leave reviews for purchased products
+- Password reset functionality
 
-Admin
-
-- Create products
-- Update products
+### Admin Features
+- Create new products
+- Update existing products
 - Soft delete products
 - Manage product sizes and stock
-- View all orders
-- View store statistics
+- View all customer orders
+- Basic store statistics dashboard
 
 ---
 
-Project Structure
+## Project Structure
 
 miro_store
 │
@@ -67,13 +64,13 @@ miro_store
 
 ---
 
-Running the Project
+## Running the Project
 
-Backend
+### Backend
 
-cd backend
-npm install
-npm run dev
+cd backend  
+npm install  
+npm run dev  
 
 Backend runs on:
 
@@ -81,11 +78,11 @@ http://localhost:5000
 
 ---
 
-Frontend
+### Frontend
 
-cd frontend
-npm install
-npm run dev
+cd frontend  
+npm install  
+npm run dev  
 
 Frontend runs on:
 
@@ -93,20 +90,30 @@ http://localhost:5173
 
 ---
 
-Documentation
+## Environment Variables
 
-Additional documentation is available inside each service:
+Create a `.env` file in the backend folder.
 
-Backend documentation
+Example:
 
-backend/README.md
-
-Frontend documentation
-
-frontend/README.md
+MONGO_URI=your_mongodb_connection  
+JWT_SECRET=your_secret_key  
+PAYPAL_CLIENT_ID=your_paypal_client_id  
 
 ---
 
-Author
+## Documentation
+
+Additional documentation is available inside each service.
+
+Backend documentation:  
+backend/README.md  
+
+Frontend documentation:  
+frontend/README.md  
+
+---
+
+## Author
 
 Mohamad Hussam Abosaleh
