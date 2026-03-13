@@ -66,8 +66,8 @@ Facebook
 <h3>Explore</h3>
 
 <Link to="/">Home</Link>
-<Link to="/men">Men</Link>
-<Link to="/women">Women</Link>
+<Link to="/products?gender=men">Men</Link>
+<Link to="/products?gender=women">Women</Link>
 <Link to="/contact">Contact</Link>
 
 </div>

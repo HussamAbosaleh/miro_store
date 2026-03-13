@@ -123,11 +123,11 @@ Overview of your store performance
 
 <div className="admin-grid">
 
-<div className="admin-card users">
+<Link to="/admin/users" className="admin-card users">
 <h3>Users</h3>
 <p>{stats?.totalUsers || 0}</p>
 <span>Total registered users</span>
-</div>
+</Link>
 
 <Link to="/admin/products" className="admin-card products">
 <h3>Products</h3>
@@ -135,11 +135,11 @@ Overview of your store performance
 <span>Manage products</span>
 </Link>
 
-<div className="admin-card orders">
+<Link to="/admin/orders" className="admin-card orders">
 <h3>Orders</h3>
 <p>{stats?.totalOrders || 0}</p>
-<span>Total orders placed</span>
-</div>
+<span>View all orders</span>
+</Link>
 
 <div className="admin-card revenue">
 <h3>Revenue</h3>

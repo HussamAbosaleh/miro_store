@@ -25,7 +25,7 @@ throw new Error("Failed to fetch products")
 
 const data = await res.json()
 
-const list = data.products || data
+const list = data.products || data || []
 
 setProducts(list)
 setFilteredProducts(list)
@@ -78,7 +78,9 @@ const handleSearch = (value) => {
 setSearch(value)
 
 const filtered = products.filter(product =>
-(product.name || "").toLowerCase().includes(value.toLowerCase())
+(product.name || "")
+.toLowerCase()
+.includes(value.toLowerCase())
 )
 
 setFilteredProducts(filtered)
@@ -101,60 +103,36 @@ return <p style={{padding:"120px"}}>Loading...</p>
 
 return(
 
-<div style={{padding:"40px"}}>
+<div className="admin-page">
 
 <h1>Admin Products</h1>
 
-{/* ================= TOP BAR ================= */}
-
-<div style={{
-display:"flex",
-justifyContent:"space-between",
-alignItems:"center",
-marginTop:"20px",
-marginBottom:"20px"
-}}>
+<div className="admin-topbar">
 
 <input
+className="admin-search"
 placeholder="Search product..."
 value={search}
 onChange={(e)=>handleSearch(e.target.value)}
-style={{
-padding:"8px",
-width:"250px"
-}}
 />
 
 <Link to="/admin/products/add">
 
-<button style={{
-padding:"10px 18px",
-cursor:"pointer",
-background:"#111",
-color:"#fff",
-border:"none"
-}}>
-
+<button className="admin-add-btn">
 + Add Product
-
 </button>
 
 </Link>
 
 </div>
 
-{/* ================= PRODUCTS TABLE ================= */}
+<table className="admin-table">
 
-<table style={{
-width:"100%",
-borderCollapse:"collapse"
-}}>
-
-<thead style={{background:"#f5f5f5"}}>
+<thead>
 
 <tr>
 
-<th style={{padding:"10px"}}>Image</th>
+<th>Image</th>
 <th>Name</th>
 <th>Price</th>
 <th>Stock</th>
@@ -173,20 +151,23 @@ product.images && product.images.length > 0
 ? `http://localhost:5000${product.images[0]}`
 : "https://via.placeholder.com/60"
 
+/* ================= CALCULATE STOCK ================= */
+
+const stock =
+product.sizes && product.sizes.length > 0
+? product.sizes.reduce((total,s)=> total + (s.stock || 0),0)
+: product.countInStock ?? product.stock ?? 0
+
 return(
 
-<tr key={product._id} style={{borderBottom:"1px solid #eee"}}>
+<tr key={product._id || product.id}>
 
-<td style={{padding:"10px"}}>
+<td>
 
 <img
 src={image}
 alt={product.name}
-style={{
-width:"60px",
-height:"60px",
-objectFit:"cover"
-}}
+style={{width:"60px",borderRadius:"6px"}}
 />
 
 </td>
@@ -195,21 +176,21 @@ objectFit:"cover"
 
 <td>{product.price} €</td>
 
-<td>{product.countInStock || 0}</td>
+<td>{stock}</td>
 
-<td>
+<td className="admin-actions-buttons">
 
 <Link to={`/admin/products/edit/${product._id}`}>
 
-<button style={{marginRight:"10px"}}>
+<button className="admin-btn role">
 Edit
 </button>
 
 </Link>
 
 <button
+className="admin-btn delete"
 onClick={()=>deleteProduct(product._id)}
-style={{color:"red"}}
 >
 
 Delete

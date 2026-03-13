@@ -117,18 +117,13 @@ return <p style={{padding:"120px"}}>Loading...</p>
 
 return(
 
-<div style={{
-padding:"40px",
-maxWidth:"500px"
-}}>
+<div className="admin-page">
 
 <h1>Edit Product</h1>
 
 {error && <p style={{color:"red"}}>{error}</p>}
 
-<form onSubmit={submitHandler}>
-
-{/* NAME */}
+<form onSubmit={submitHandler} className="admin-form">
 
 <input
 value={name}
@@ -136,10 +131,6 @@ onChange={(e)=>setName(e.target.value)}
 placeholder="Product Name"
 required
 />
-
-<br/><br/>
-
-{/* PRICE */}
 
 <input
 type="number"
@@ -149,10 +140,6 @@ placeholder="Price"
 required
 />
 
-<br/><br/>
-
-{/* CATEGORY */}
-
 <input
 value={category}
 onChange={(e)=>setCategory(e.target.value)}
@@ -160,23 +147,13 @@ placeholder="Category"
 required
 />
 
-<br/><br/>
-
-{/* GENDER */}
-
 <select
 value={gender}
 onChange={(e)=>setGender(e.target.value)}
 >
-
 <option value="men">Men</option>
 <option value="women">Women</option>
-
 </select>
-
-<br/><br/>
-
-{/* DESCRIPTION */}
 
 <textarea
 value={description}
@@ -185,35 +162,24 @@ placeholder="Description"
 required
 />
 
-<br/><br/>
-
-{/* IMAGE */}
-
 <input
 value={image}
 onChange={(e)=>setImage(e.target.value)}
 placeholder="/uploads/products/image.png"
 />
 
-<br/><br/>
-
-{/* IMAGE PREVIEW */}
-
 {image && (
+
+<div className="admin-preview">
 
 <img
 src={`http://localhost:5000${image}`}
 alt="preview"
-style={{
-width:"120px",
-marginBottom:"10px",
-display:"block"
-}}
 />
 
-)}
+</div>
 
-{/* BUTTON */}
+)}
 
 <button type="submit" disabled={saving}>
 

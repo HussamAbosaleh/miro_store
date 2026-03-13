@@ -1,3 +1,5 @@
+/* ================= ADMIN PAGE ================= */
+
 .admin-page{
 max-width:1200px;
 margin:120px auto;
@@ -16,16 +18,18 @@ font-size:14px;
 margin-bottom:35px;
 }
 
-/* ===== GRID ===== */
+
+/* ================= GRID ================= */
 
 .admin-grid{
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:25px;
 margin-top:20px;
 }
 
-/* ===== CARD ===== */
+
+/* ================= CARD ================= */
 
 .admin-card{
 background:linear-gradient(145deg,#151515,#0d0d0d);
@@ -38,6 +42,8 @@ border:1px solid rgba(255,255,255,0.05);
 position:relative;
 overflow:hidden;
 cursor:pointer;
+text-decoration:none;
+display:block;
 }
 
 /* glow effect */
@@ -58,14 +64,14 @@ transition:.35s;
 opacity:1;
 }
 
-/* hover animation */
+/* hover */
 
 .admin-card:hover{
 transform:translateY(-6px);
 box-shadow:0 15px 30px rgba(0,0,0,0.35);
 }
 
-/* ===== TITLE ===== */
+/* title */
 
 .admin-card h3{
 font-size:14px;
@@ -75,7 +81,7 @@ color:#bbb;
 margin-bottom:14px;
 }
 
-/* ===== VALUE ===== */
+/* value */
 
 .admin-card p{
 font-size:36px;
@@ -83,14 +89,13 @@ font-weight:700;
 margin-bottom:5px;
 }
 
-/* description */
-
 .admin-card span{
 font-size:13px;
 color:#aaa;
 }
 
-/* ===== COLORS ===== */
+
+/* ================= CARD COLORS ================= */
 
 .admin-card.users{
 background:linear-gradient(135deg,#1f1f1f,#0c0c0c);
@@ -108,7 +113,8 @@ background:linear-gradient(135deg,#212121,#0f0f0f);
 background:linear-gradient(135deg,#222,#101010);
 }
 
-/* ===== CHART ===== */
+
+/* ================= CHART ================= */
 
 .admin-chart{
 margin-top:60px;
@@ -123,7 +129,8 @@ margin-bottom:20px;
 font-size:20px;
 }
 
-/* ===== QUICK ACTIONS ===== */
+
+/* ================= QUICK ACTIONS ================= */
 
 .admin-actions{
 margin-top:60px;
@@ -149,6 +156,7 @@ border-radius:8px;
 text-decoration:none;
 transition:all .2s ease;
 font-size:14px;
+display:inline-block;
 }
 
 .admin-action-btn:hover{
@@ -156,7 +164,167 @@ background:#333;
 transform:translateY(-2px);
 }
 
-/* ===== RESPONSIVE ===== */
+
+/* ================= USER ACTION BUTTONS ================= */
+
+.admin-actions-buttons{
+display:flex;
+gap:12px;          /* المسافة بين الأزرار */
+justify-content:flex-end;
+align-items:center;
+}
+
+/* buttons */
+
+.admin-btn{
+border:none;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+font-size:13px;
+transition:.2s;
+min-width:90px;    /* يجعل الأزرار متساوية */
+}
+
+/* make admin */
+
+.admin-btn.role{
+background:#111;
+color:white;
+}
+
+/* delete */
+
+.admin-btn.delete{
+background:#e63946;
+color:white;
+}
+
+/* hover */
+
+.admin-btn:hover{
+opacity:.9;
+transform:translateY(-1px);
+}
+
+/* ================= FORM ================= */
+
+.admin-form{
+max-width:650px;
+margin:40px auto;
+display:flex;
+flex-direction:column;
+gap:15px;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select{
+padding:12px;
+border:1px solid #ddd;
+border-radius:6px;
+font-size:14px;
+}
+
+.admin-form textarea{
+min-height:80px;
+resize:vertical;
+}
+
+.admin-form button{
+margin-top:10px;
+padding:14px;
+background:#111;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:15px;
+}
+
+.admin-form button:hover{
+background:#333;
+}
+
+
+/* ================= TABLE ================= */
+
+.admin-table{
+width:100%;
+border-collapse:collapse;
+margin-top:30px;
+background:white;
+border-radius:8px;
+overflow:hidden;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
+table-layout:fixed;
+}
+
+.admin-table th,
+.admin-table td{
+padding:12px 15px;
+border-bottom:1px solid #eee;
+font-size:14px;
+vertical-align:middle;
+}
+
+.admin-table th{
+background:#111;
+color:white;
+text-align:left;
+}
+
+/* align numbers */
+
+.admin-table th:nth-child(3),
+.admin-table th:nth-child(4),
+.admin-table th:nth-child(5),
+.admin-table td:nth-child(3),
+.admin-table td:nth-child(4),
+.admin-table td:nth-child(5){
+text-align:center;
+}
+
+/* product image */
+
+.admin-table img{
+width:45px;
+height:45px;
+object-fit:cover;
+border-radius:6px;
+}
+
+/* hover */
+
+.admin-table tr:hover{
+background:#f7f7f7;
+}
+
+
+/* ================= TOP BAR ================= */
+
+.admin-topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:25px 0;
+}
+
+.admin-search{
+width:260px;
+}
+
+.admin-add-btn{
+background:#111;
+color:white;
+}
+
+
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:900px){
 
@@ -176,35 +344,18 @@ grid-template-columns:1fr;
 flex-direction:column;
 }
 
+.admin-page{
+padding:0 20px;
 }
 
-.admin-form{
-max-width:500px;
-margin-top:30px;
-display:flex;
+.admin-topbar{
 flex-direction:column;
 gap:15px;
+align-items:flex-start;
 }
 
-.admin-form input,
-.admin-form textarea,
-.admin-form select{
-padding:10px;
-border:1px solid #ddd;
-border-radius:6px;
-font-size:14px;
+.admin-search{
+width:100%;
 }
 
-.admin-form button{
-margin-top:10px;
-padding:12px;
-background:#111;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.admin-form button:hover{
-background:#333;
 }

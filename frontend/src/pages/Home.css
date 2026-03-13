@@ -4,22 +4,52 @@
 max-width:1300px;
 margin:auto;
 padding:0 20px;
-width: 100%;
+width:100%;
 }
+
+
+/* ================= TRUST SECTION ================= */
+
+.trust-section{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+margin:60px 0;
+}
+
+.trust-item{
+display:flex;
+align-items:center;
+gap:12px;
+background:white;
+padding:18px 20px;
+border-radius:12px;
+border:1px solid #eee;
+box-shadow:0 6px 18px rgba(0,0,0,0.04);
+transition:.25s;
+}
+
+.trust-item:hover{
+transform:translateY(-3px);
+box-shadow:0 12px 25px rgba(0,0,0,0.08);
+}
+
+.trust-icon{
+font-size:18px;
+}
+
 
 /* ================= SECTION ================= */
 
 .section{
-margin-top:80px;
+margin-top:90px;
 }
-
-/* section header */
 
 .section-header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
+margin-bottom:25px;
 }
 
 .section-header h2{
@@ -31,13 +61,14 @@ font-weight:600;
 text-decoration:none;
 font-size:14px;
 color:#555;
-transition:0.2s;
+transition:.2s;
 }
 
 .view-all:hover{
 text-decoration:underline;
 color:#000;
 }
+
 
 /* ================= COLLECTIONS ================= */
 
@@ -47,8 +78,6 @@ grid-template-columns:1fr 1fr;
 gap:25px;
 margin-top:60px;
 }
-
-/* BACKGROUND IMAGES */
 
 .collection-card.men{
 background-image:url("http://localhost:5000/uploads/products/zip-black-man-1.png");
@@ -62,22 +91,18 @@ background-size:cover;
 background-position:center;
 }
 
-/* CARD */
-
 .collection-card{
 position:relative;
 height:380px;
-border-radius:14px;
+border-radius:16px;
 overflow:hidden;
 display:flex;
 align-items:flex-end;
 padding:30px;
 text-decoration:none;
 color:white;
-transition:0.35s ease;
+transition:.35s ease;
 }
-
-/* DARK OVERLAY */
 
 .collection-card::before{
 content:"";
@@ -85,20 +110,16 @@ position:absolute;
 inset:0;
 background:linear-gradient(
 to top,
-rgba(0,0,0,0.65),
-rgba(0,0,0,0.25),
+rgba(0,0,0,.7),
+rgba(0,0,0,.3),
 transparent
 );
 }
 
-/* HOVER */
-
 .collection-card:hover{
-transform:translateY(-6px);
-box-shadow:0 25px 50px rgba(0,0,0,0.25);
+transform:translateY(-6px) scale(1.01);
+box-shadow:0 30px 60px rgba(0,0,0,0.25);
 }
-
-/* TEXT */
 
 .collection-overlay{
 position:relative;
@@ -112,27 +133,26 @@ margin-bottom:8px;
 
 .collection-overlay p{
 font-size:14px;
-opacity:0.9;
+opacity:.9;
 margin-bottom:14px;
 }
-
-/* BUTTON */
 
 .shop-btn{
 display:inline-block;
 background:white;
 color:black;
-padding:8px 20px;
-border-radius:6px;
+padding:9px 22px;
+border-radius:7px;
 font-size:13px;
 font-weight:600;
-transition:0.25s;
+transition:.25s;
 }
 
 .collection-card:hover .shop-btn{
 background:black;
 color:white;
 }
+
 
 /* ================= GRID ================= */
 
@@ -143,45 +163,141 @@ gap:35px;
 margin-top:25px;
 }
 
+
 /* ================= PRODUCT CARD ================= */
 
 .card{
 background:white;
-border-radius:12px;
+border-radius:14px;
 overflow:hidden;
 text-decoration:none;
 color:black;
-transition:0.35s ease;
+transition:.35s ease;
+position:relative;
 }
 
 .card:hover{
 transform:translateY(-8px);
-box-shadow:0 18px 40px rgba(0,0,0,0.12);
+box-shadow:0 22px 50px rgba(0,0,0,.14);
 }
 
-/* IMAGE */
+
+/* ================= IMAGE BOX ================= */
 
 .image-box{
+position:relative;
 width:100%;
 aspect-ratio:4/5;
 overflow:hidden;
 }
 
-.image-box img{
+
+/* ================= PRODUCT IMAGES ================= */
+
+.product-img{
 width:100%;
 height:100%;
 object-fit:cover;
-transition:0.45s ease;
+transition:.5s ease;
+position:absolute;
+top:0;
+left:0;
+pointer-events:none;
 }
 
-.card:hover img{
-transform:scale(1.08);
+.main-img{
+opacity:1;
 }
 
-/* INFO */
+.hover-img{
+opacity:0;
+}
+
+.card:hover .main-img{
+opacity:0;
+}
+
+.card:hover .hover-img{
+opacity:1;
+}
+
+
+/* ================= BADGE ================= */
+
+.product-badge{
+position:absolute;
+top:12px;
+left:12px;
+background:#111;
+color:white;
+font-size:11px;
+padding:6px 10px;
+border-radius:20px;
+z-index:5;
+}
+
+
+/* ================= HOVER ACTIONS ================= */
+
+.product-hover{
+position:absolute;
+bottom:20px;
+left:0;
+right:0;
+display:flex;
+justify-content:center;
+gap:10px;
+
+opacity:0;
+transform:translateY(20px);
+transition:.35s ease;
+
+z-index:10;
+}
+
+.card:hover .product-hover{
+opacity:1;
+transform:translateY(0);
+}
+
+
+/* ================= BUTTONS ================= */
+
+.quick-btn,
+.cart-btn{
+border:none;
+padding:9px 16px;
+font-size:12px;
+border-radius:6px;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+transition:.2s;
+}
+
+.quick-btn{
+background:#fff;
+color:#111;
+border:1px solid #ddd;
+}
+
+.cart-btn{
+background:#111;
+color:#fff;
+}
+
+.quick-btn:hover{
+background:#eee;
+}
+
+.cart-btn:hover{
+background:#333;
+}
+
+
+/* ================= CARD INFO ================= */
 
 .card-info{
-padding:14px 16px 18px;
+padding:15px 18px 20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -198,14 +314,15 @@ font-size:15px;
 color:#111;
 }
 
+
 /* ================= PROMO BANNER ================= */
 
 .promo-banner{
-margin-top:90px;
+margin-top:100px;
 background:#111;
 color:white;
-padding:80px 30px;
-border-radius:14px;
+padding:90px 30px;
+border-radius:16px;
 text-align:center;
 }
 
@@ -215,7 +332,7 @@ margin-bottom:10px;
 }
 
 .promo-banner p{
-opacity:0.85;
+opacity:.85;
 margin-bottom:25px;
 }
 
@@ -223,20 +340,25 @@ margin-bottom:25px;
 display:inline-block;
 background:white;
 color:black;
-padding:12px 30px;
-border-radius:6px;
+padding:13px 34px;
+border-radius:7px;
 text-decoration:none;
 font-weight:600;
-transition:0.25s;
+transition:.25s;
 }
 
 .banner-btn:hover{
 background:#ddd;
 }
 
+
 /* ================= RESPONSIVE ================= */
 
-@media(max-width:900px){
+@media(max-width:1024px){
+
+.trust-section{
+grid-template-columns:repeat(2,1fr);
+}
 
 .collections{
 grid-template-columns:1fr;
@@ -246,59 +368,13 @@ grid-template-columns:1fr;
 height:300px;
 }
 
-.section-header h2{
-font-size:22px;
-}
-
-.promo-banner h2{
-font-size:26px;
-}
-
-}
-
-@media(max-width:600px){
-
-.grid{
-gap:20px;
-}
-
-.section{
-margin-top:60px;
-}
-
-.collection-overlay h2{
-font-size:26px;
-}
-
-}
-
-
-/* ================= TABLET ================= */
-
-@media (max-width:1024px){
-
-.home-wrapper{
-padding:0 15px;
-}
-
-.collections{
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.collection-card{
-height:300px;
-padding:20px;
-}
-
-.collection-overlay h2{
-font-size:26px;
-}
-
 .grid{
 grid-template-columns:repeat(2,1fr);
-gap:25px;
 }
+
+}
+
+@media(max-width:768px){
 
 .section{
 margin-top:70px;
@@ -306,76 +382,19 @@ margin-top:70px;
 
 }
 
+@media(max-width:480px){
 
-/* ================= MOBILE ================= */
-
-@media (max-width:768px){
-
-.collections{
+.trust-section{
 grid-template-columns:1fr;
 }
-
-.collection-card{
-height:260px;
-}
-
-.collection-overlay h2{
-font-size:24px;
-}
-
-.collection-overlay p{
-font-size:13px;
-}
-
-.shop-btn{
-padding:7px 16px;
-font-size:12px;
-}
-
-.grid{
-grid-template-columns:repeat(2,1fr);
-gap:18px;
-}
-
-.card-info h4{
-font-size:14px;
-}
-
-.card-info span{
-font-size:14px;
-}
-
-.section{
-margin-top:60px;
-}
-
-}
-
-
-/* ================= SMALL MOBILE ================= */
-
-@media (max-width:480px){
 
 .grid{
 grid-template-columns:1fr 1fr;
 gap:14px;
 }
 
-.card-info{
-padding:10px;
-}
-
-.card-info h4{
-font-size:13px;
-}
-
-.card-info span{
-font-size:13px;
-}
-
 .collection-card{
 height:220px;
-padding:15px;
 }
 
 .collection-overlay h2{
@@ -386,13 +405,8 @@ font-size:20px;
 display:none;
 }
 
-.shop-btn{
-padding:6px 14px;
-font-size:11px;
-}
-
 .promo-banner{
-padding:50px 20px;
+padding:60px 20px;
 }
 
 .promo-banner h2{

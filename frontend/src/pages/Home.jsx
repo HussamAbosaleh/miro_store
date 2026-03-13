@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Home.css";
 import Hero from "../components/Hero";
 
-function Home() {
+function Home(){
 
 const [featured,setFeatured] = useState([]);
 const [hoodies,setHoodies] = useState([]);
@@ -89,28 +89,46 @@ product.images && product.images.length > 0
 ? `http://localhost:5000${product.images[0]}`
 : "https://via.placeholder.com/400x500";
 
+const image2 =
+product.images && product.images.length > 1
+? `http://localhost:5000${product.images[1]}`
+: image;
+
 return(
 
 <div key={product._id} className="card">
 
-<Link to={`/product/${product._id}`}>
-
 <div className="image-box">
+
+{/* badge */}
+
+<div className="product-badge">
+New
+</div>
+
+<Link to={`/product/${product._id}`}>
 
 <img
 src={image}
 alt={product.name}
+className="product-img main-img"
 />
+
+<img
+src={image2}
+alt={product.name}
+className="product-img hover-img"
+/>
+
+</Link>
 
 </div>
 
-<div className="card-info">
+<Link to={`/product/${product._id}`} className="card-info">
 
 <h4>{product.name}</h4>
 
 <span>{product.price} €</span>
-
-</div>
 
 </Link>
 
@@ -146,13 +164,12 @@ return(
 <div className="home-wrapper">
 
 
-{/* ================= COLLECTIONS ================= */}
 
 {/* ================= COLLECTIONS ================= */}
 
 <section className="collections">
 
-<Link to="/men" className="collection-card men">
+<Link to="/products?gender=men" className="collection-card men">
 
 <div className="collection-overlay">
 <h2>Men Collection</h2>
@@ -162,7 +179,8 @@ return(
 
 </Link>
 
-<Link to="/women" className="collection-card women">
+
+<Link to="/products?gender=women" className="collection-card women">
 
 <div className="collection-overlay">
 <h2>Women Collection</h2>
@@ -173,6 +191,7 @@ return(
 </Link>
 
 </section>
+
 
 {/* ================= FEATURED ================= */}
 
@@ -192,6 +211,43 @@ View All
 
 </section>
 
+{/* ================= TRUST SECTION ================= */}
+
+<section className="trust-section">
+
+<div className="trust-item">
+<div className="trust-icon">🚚</div>
+<div>
+<h4>Free Shipping</h4>
+<p>Orders over €99</p>
+</div>
+</div>
+
+<div className="trust-item">
+<div className="trust-icon">↩️</div>
+<div>
+<h4>30 Days Return</h4>
+<p>Easy returns</p>
+</div>
+</div>
+
+<div className="trust-item">
+<div className="trust-icon">🔒</div>
+<div>
+<h4>Secure Payment</h4>
+<p>Safe checkout</p>
+</div>
+</div>
+
+<div className="trust-item">
+<div className="trust-icon">⭐</div>
+<div>
+<h4>Premium Quality</h4>
+<p>High quality fabrics</p>
+</div>
+</div>
+
+</section>
 
 
 {/* ================= HOODIES ================= */}
@@ -213,7 +269,6 @@ View All
 </section>
 
 
-
 {/* ================= SWEATSHIRTS ================= */}
 
 <section className="section">
@@ -233,7 +288,6 @@ View All
 </section>
 
 
-
 {/* ================= PROMO BANNER ================= */}
 
 <section className="promo-banner">
@@ -247,7 +301,6 @@ Shop Now
 </Link>
 
 </section>
-
 
 </div>
 

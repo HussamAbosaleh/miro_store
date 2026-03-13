@@ -22,8 +22,11 @@ Timeless essentials designed for everyday life.
 Clean design. Premium comfort.
 </p>
 
-<button onClick={()=>navigate("/men")}>
-Shop Collection
+<button
+className="hero-btn"
+onClick={()=>navigate("/products")}
+>
+Shop Now
 </button>
 
 </div>

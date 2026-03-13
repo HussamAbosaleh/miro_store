@@ -17,7 +17,12 @@ padding:0;
 
 body{
 margin:0;
-min-width:320px;
+background:#d1cece;
+font-family:'Poppins', sans-serif;
+
+display:flex;
+flex-direction:column;
+
 min-height:100vh;
 }
 

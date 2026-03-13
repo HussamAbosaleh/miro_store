@@ -1,21 +1,49 @@
-*{
+/* ================= RESET ================= */
+
+*,
+*::before,
+*::after{
 box-sizing:border-box;
 margin:0;
 padding:0;
 }
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* ================= DESIGN SYSTEM ================= */
 
-  color: #111;
-  background-color: #fff;
+:root{
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* colors */
+
+--bg-main:#f5f6f8;
+--bg-card:#ffffff;
+
+--text-main:#111;
+--text-light:#777;
+
+--primary:#111;
+--primary-hover:#333;
+
+--border:#e5e5e5;
+
+/* shadows */
+
+--shadow-sm:0 4px 12px rgba(0,0,0,0.04);
+--shadow-md:0 8px 25px rgba(0,0,0,0.06);
+
+/* radius */
+
+--radius:10px;
+
+/* container */
+
+--container:1300px;
+
+}
+
+/* ================= GLOBAL ================= */
+
+html{
+scroll-behavior:smooth;
 }
 
 html,body,#root{
@@ -23,46 +51,129 @@ width:100%;
 height:100%;
 }
 
-/* BODY */
-
 body{
-margin:0;
+
+font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+line-height:1.6;
+
 min-width:320px;
 min-height:100vh;
-background:white;
-color:#111;
+
+background:var(--bg-main);
+color:var(--text-main);
+
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+
 }
 
-/* LINKS */
+/* ================= LINKS ================= */
 
 a{
-font-weight:500;
 text-decoration:none;
 color:inherit;
+transition:.2s;
 }
 
-/* BUTTON */
+a:hover{
+opacity:.85;
+}
+
+/* ================= BUTTON ================= */
 
 button{
-border-radius:8px;
-border:1px solid transparent;
-padding:0.6em 1.2em;
-font-size:1em;
+
+border:none;
+border-radius:var(--radius);
+
+padding:10px 18px;
+
+font-size:14px;
 font-weight:500;
-font-family:inherit;
-background-color:#1a1a1a;
+
+background:var(--primary);
 color:white;
+
 cursor:pointer;
-transition:0.25s;
+
+transition:all .2s ease;
+
 }
 
 button:hover{
-opacity:.9;
+
+background:var(--primary-hover);
+transform:translateY(-1px);
+
 }
 
-/* IMAGE */
+/* ================= INPUT ================= */
+
+input,
+textarea,
+select{
+
+width:100%;
+
+padding:10px 12px;
+
+border:1px solid var(--border);
+border-radius:var(--radius);
+
+font-size:14px;
+
+outline:none;
+
+transition:.2s;
+
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+
+border-color:#111;
+
+}
+
+/* ================= IMAGE ================= */
 
 img{
 max-width:100%;
 display:block;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+max-width:var(--container);
+margin:auto;
+padding:0 20px;
+}
+
+/* ================= PAGE CARD ================= */
+
+.page-card{
+
+background:var(--bg-card);
+border-radius:var(--radius);
+
+padding:40px;
+
+box-shadow:var(--shadow-md);
+
+}
+
+/* ================= UTILITIES ================= */
+
+.text-center{
+text-align:center;
+}
+
+.mt-40{
+margin-top:40px;
+}
+
+.mt-80{
+margin-top:80px;
 }

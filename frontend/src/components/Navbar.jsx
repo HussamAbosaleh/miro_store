@@ -129,11 +129,17 @@ onClick={()=>setMenuOpen(!menuOpen)}
 
 <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
 
-<Link to="/" onClick={()=>setMenuOpen(false)}>Home</Link>
+<Link to="/" onClick={()=>setMenuOpen(false)}>
+Home
+</Link>
 
-<Link to="/men" onClick={()=>setMenuOpen(false)}>Men</Link>
+<Link to="/products?gender=men" onClick={()=>setMenuOpen(false)}>
+Men
+</Link>
 
-<Link to="/women" onClick={()=>setMenuOpen(false)}>Women</Link>
+<Link to="/products?gender=women" onClick={()=>setMenuOpen(false)}>
+Women
+</Link>
 
 </nav>
 
