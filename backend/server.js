@@ -21,14 +21,14 @@ const PORT = process.env.PORT || 5000;
 const requiredEnvVars = ["MONGO_URI", "JWT_SECRET"];
 
 const missingEnvVars = requiredEnvVars.filter(
-(key) => !process.env[key]
+  (key) => !process.env[key]
 );
 
 if (missingEnvVars.length) {
-console.error(
-`Missing required environment variables: ${missingEnvVars.join(", ")}`
-);
-process.exit(1);
+  console.error(
+    `Missing required environment variables: ${missingEnvVars.join(", ")}`
+  );
+  process.exit(1);
 }
 
 /* ================= DATABASE ================= */
@@ -48,13 +48,13 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 /* ================= TEST ROUTE ================= */
 
 app.get("/", (req, res) => {
-res.send("Backend is running 🚀");
+  res.send("Backend is running 🚀");
 });
 
 /* ================= PAYPAL CONFIG ================= */
 
 app.get("/api/config/paypal", (req, res) => {
-res.send(process.env.PAYPAL_CLIENT_ID || "");
+  res.send(process.env.PAYPAL_CLIENT_ID || "");
 });
 
 /* ================= API ROUTES ================= */
@@ -70,25 +70,25 @@ app.use("/api/health", healthRoutes);
 /* ================= 404 HANDLER ================= */
 
 app.use((req, res) => {
-res.status(404).json({
-success: false,
-message: "Route not found",
-});
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
 });
 
 /* ================= GLOBAL ERROR HANDLER ================= */
 
 app.use((err, req, res, next) => {
-console.error("Server Error:", err);
+  console.error("Server Error:", err);
 
-res.status(err.status || 500).json({
-success: false,
-message: err.message || "Internal Server Error",
-});
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
 });
 
 /* ================= SERVER ================= */
 
-app.listen(PORT, () => {
-console.log(`🚀 Server running on port ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
