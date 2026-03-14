@@ -224,10 +224,10 @@ View All
 </div>
 
 <div className="trust-item">
-<div className="trust-icon">↩️</div>
+<div className="trust-icon">⭐</div>
 <div>
-<h4>30 Days Return</h4>
-<p>Easy returns</p>
+<h4>Thank You</h4>
+<p>Engineer Ahmed Shaashaa</p>
 </div>
 </div>
 

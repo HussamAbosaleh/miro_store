@@ -55,6 +55,9 @@ const createOrder = async (req, res) => {
         });
       }
 
+
+// ================== اضافة عنصر للطلب ==================
+
       orderItems.push({
         product: product._id,
         name: product.name,
@@ -65,7 +68,7 @@ const createOrder = async (req, res) => {
 
       totalPrice += product.price * item.quantity;
     }
-
+// ================== اضافة للطلب ==================
     const order = await Order.create({
       user: req.user._id,
       orderItems,
