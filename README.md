@@ -66,19 +66,19 @@ Password: 123456789
 ![Checkout](./screenshots/Checkout.png)
 
 ### 📦 Product Details
-![Product](./screenshots/ProductDetails.png)
+![ProductDetails](./screenshots/ProductDetails.png)
 
 ### 🛒 Cart
 ![Cart](./screenshots/Cart.png)
 
 ### ⚙️ Admin Dashboard
-![Admin](./screenshots/AdminDashbord.png)
+![AdminDashbord](./screenshots/AdminDashbord.png)
 
 ### ➕ Add Product
-![Add Product](./screenshots/addProduct.png)
+![AddProduct](./screenshots/AddProduct.png)
 
 ### 📊 Orders
-![Orders](./screenshots/orders.png)
+![Order](./screenshots/Order.png)
 
 ### 👤 Account 
 ![Account](./screenshots/Account.png)
