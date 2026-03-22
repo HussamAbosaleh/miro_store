@@ -82,7 +82,7 @@ const getProducts = async (req, res) => {
     const limit = normalizePositiveInt(req.query.limit, 25);
     const skip = (page - 1) * limit;
 
-    const filter = { isActive: true };
+    const filter = { };
 
     /* SEARCH */
 
