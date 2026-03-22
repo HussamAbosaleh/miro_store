@@ -10,7 +10,7 @@ try{
 
 const totalUsers = await User.countDocuments();
 
-const totalProducts = await Product.countDocuments({
+const total                      = await Product.countDocuments({
 isActive: true
 });
 
