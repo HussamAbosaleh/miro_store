@@ -8,7 +8,7 @@ This project simulates a modern online clothing store where users can browse pro
 
 ## 🚀 Live Demo
 
-👉 https://your-live-link.com
+👉 https://
 
 ---
 
