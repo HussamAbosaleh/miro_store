@@ -59,22 +59,29 @@ Password: 123456789
 
 ## 📸 Screenshots
 
-### Home Page
+### 🏠 Home
+![Home](./screenshots/Home.png)
 
-![Home](./screenshots/home.png)
+### 🛍️ Checkout
+![Checkout](./screenshots/Checkout.png)
 
-### Product Page
+### 📦 Product Details
+![ProductDetails](./screenshots/ProductDetails.png)
 
-![Product](./screenshots/product.png)
+### 🛒 Cart
+![Cart](./screenshots/Cart.png)
 
-### Cart
+### ⚙️ Admin Dashboard
+![AdminDashbord](./screenshots/AdminDashbord.png)
 
-![Cart](./screenshots/cart.png)
+### ➕ Add Product
+![AddProduct](./screenshots/AddProduct.png)
 
-### Admin Dashboard
+### 📊 Orders
+![Order](./screenshots/Order.png)
 
-![Admin](./screenshots/admin.png)
-
+### 👤 Account 
+![Account](./screenshots/Account.png)
 ---
 
 ## ⚙️ Running the Project (Docker)
