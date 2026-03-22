@@ -50,7 +50,7 @@ setCartCount(0);
 return;
 }
 
-const res = await fetch("http://https://miro-store-1.onrender.com/api/cart/my",{
+const res = await fetch("https://miro-store-1.onrender.com/api/cart/my",{
 headers:{
 Authorization:`Bearer ${token}`
 }

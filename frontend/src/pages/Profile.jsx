@@ -18,7 +18,7 @@ const fetchOrders = async () => {
 try{
 
 const res = await fetch(
-"http://https://miro-store-1.onrender.com/api/orders/my-orders",
+"https://miro-store-1.onrender.com/api/orders/my-orders",
 {
 headers:{
 Authorization:`Bearer ${token}`

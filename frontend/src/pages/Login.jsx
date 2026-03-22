@@ -22,7 +22,7 @@ setLoading(true);
 
 try {
 
-const res = await fetch("http://https://miro-store-1.onrender.com/api/auth/login", {
+const res = await fetch("https://miro-store-1.onrender.com/api/auth/login", {
 method: "POST",
 headers: {
 "Content-Type": "application/json",

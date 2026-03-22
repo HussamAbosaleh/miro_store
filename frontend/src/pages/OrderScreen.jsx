@@ -28,7 +28,7 @@ return;
 
 try {
 
-const res = await fetch(`http://https://miro-store-1.onrender.com/api/orders/${id}`, {
+const res = await fetch(`https://miro-store-1.onrender.com/api/orders/${id}`, {
 headers: {
 Authorization: `Bearer ${token}`
 }
@@ -63,7 +63,7 @@ const getPaypalId = async () => {
 
 try {
 
-const res = await fetch("http://https://miro-store-1.onrender.com/api/config/paypal");
+const res = await fetch("https://miro-store-1.onrender.com/api/config/paypal");
 const data = await res.text();
 
 setPaypalId(data);
@@ -86,7 +86,7 @@ const successPaymentHandler = async (details) => {
 
 try {
 
-const res = await fetch(`http://https://miro-store-1.onrender.com/api/orders/${order._id}/pay`, {
+const res = await fetch(`https://miro-store-1.onrender.com/api/orders/${order._id}/pay`, {
 
 method: "PUT",
 

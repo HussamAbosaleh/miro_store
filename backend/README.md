@@ -94,13 +94,13 @@ npm run dev
 
 Server runs on:
 
-http://https://miro-store-1.onrender.com
+https://miro-store-1.onrender.com
 
 ---
 
 ## API Base URL
 
-http://https://miro-store-1.onrender.com/api
+https://miro-store-1.onrender.com/api
 
 ---
 

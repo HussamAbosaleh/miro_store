@@ -79,7 +79,7 @@ images.forEach(img=>{
 formData.append("images",img)
 })
 
-const res = await fetch("http://https://miro-store-1.onrender.com/api/products",{
+const res = await fetch("https://miro-store-1.onrender.com/api/products",{
 method:"POST",
 headers:{
 Authorization:`Bearer ${token}`

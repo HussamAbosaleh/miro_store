@@ -22,7 +22,7 @@ return;
 
 try{
 
-const res = await fetch(`http://https://miro-store-1.onrender.com/api/users/reset-password/${token}`,{
+const res = await fetch(`https://miro-store-1.onrender.com/api/users/reset-password/${token}`,{
 method:"POST",
 headers:{
 "Content-Type":"application/json"

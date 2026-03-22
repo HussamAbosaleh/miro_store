@@ -20,7 +20,7 @@ const fetchProducts = async()=>{
 
 try{
 
-const res = await fetch("http://https://miro-store-1.onrender.com/api/products");
+const res = await fetch("https://miro-store-1.onrender.com/api/products");
 
 if(!res.ok){
 throw new Error("Failed to load products");
@@ -86,12 +86,12 @@ return(
 
 const image =
 product.images && product.images.length > 0
-? `http://https://miro-store-1.onrender.com${product.images[0]}`
+? `https://miro-store-1.onrender.com${product.images[0]}`
 : "https://via.placeholder.com/400x500";
 
 const image2 =
 product.images && product.images.length > 1
-? `http://https://miro-store-1.onrender.com${product.images[1]}`
+? `https://miro-store-1.onrender.com${product.images[1]}`
 : image;
 
 return(

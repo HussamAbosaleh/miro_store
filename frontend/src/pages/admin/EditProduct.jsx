@@ -27,7 +27,7 @@ const fetchProduct = async ()=>{
 
 try{
 
-const res = await fetch(`http://https://miro-store-1.onrender.com/api/products/${id}`)
+const res = await fetch(`https://miro-store-1.onrender.com/api/products/${id}`)
 
 if(!res.ok){
 throw new Error("Product not found")
@@ -72,7 +72,7 @@ setSaving(true)
 
 try{
 
-const res = await fetch(`http://https://miro-store-1.onrender.com/api/products/${id}`,{
+const res = await fetch(`https://miro-store-1.onrender.com/api/products/${id}`,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json",
@@ -173,7 +173,7 @@ placeholder="/uploads/products/image.png"
 <div className="admin-preview">
 
 <img
-src={`http://https://miro-store-1.onrender.com${image}`}
+src={`https://miro-store-1.onrender.com${image}`}
 alt="preview"
 />
 
