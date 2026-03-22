@@ -28,7 +28,7 @@ return;
 
 try {
 
-const res = await fetch("http://localhost:5000/api/cart/my", {
+const res = await fetch("http://https://miro-store-1.onrender.com/api/cart/my", {
 headers: {
 Authorization: `Bearer ${authToken}`,
 },
@@ -76,7 +76,7 @@ const authToken = token || localStorage.getItem("token");
 
 try {
 
-const res = await fetch("http://localhost:5000/api/cart/update", {
+const res = await fetch("http://https://miro-store-1.onrender.com/api/cart/update", {
 method: "PUT",
 headers: {
 "Content-Type": "application/json",
@@ -108,7 +108,7 @@ const authToken = token || localStorage.getItem("token");
 
 try {
 
-const res = await fetch("http://localhost:5000/api/cart/remove", {
+const res = await fetch("http://https://miro-store-1.onrender.com/api/cart/remove", {
 method: "DELETE",
 headers: {
 "Content-Type": "application/json",
@@ -150,7 +150,7 @@ try {
 setCheckoutLoading(true);
 setError(null);
 
-const res = await fetch("http://localhost:5000/api/orders", {
+const res = await fetch("http://https://miro-store-1.onrender.com/api/orders", {
 
 method: "POST",
 
@@ -234,7 +234,7 @@ return (
 
 <img
 className="cart-image"
-src={`http://localhost:5000${item.image}`}
+src={`http://https://miro-store-1.onrender.com${item.image}`}
 alt={item.name}
 />
 

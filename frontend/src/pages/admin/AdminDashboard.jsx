@@ -40,7 +40,7 @@ const fetchStats = async()=>{
 
 try{
 
-const res = await fetch("http://localhost:5000/api/admin/stats",{
+const res = await fetch("http://https://miro-store-1.onrender.com/api/admin/stats",{
 headers:{
 Authorization:`Bearer ${token}`
 }

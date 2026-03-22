@@ -18,7 +18,7 @@ const fetchUsers = async()=>{
 
 try{
 
-const res = await fetch("http://localhost:5000/api/admin/users",{
+const res = await fetch("http://https://miro-store-1.onrender.com/api/admin/users",{
 headers:{
 Authorization:`Bearer ${token}`
 }
@@ -60,7 +60,7 @@ if(!window.confirm("Delete this user?")) return
 
 try{
 
-const res = await fetch(`http://localhost:5000/api/admin/users/${id}`,{
+const res = await fetch(`http://https://miro-store-1.onrender.com/api/admin/users/${id}`,{
 method:"DELETE",
 headers:{
 Authorization:`Bearer ${token}`
@@ -88,7 +88,7 @@ const toggleAdmin = async(user)=>{
 
 try{
 
-const res = await fetch(`http://localhost:5000/api/admin/users/${user._id}/role`,{
+const res = await fetch(`http://https://miro-store-1.onrender.com/api/admin/users/${user._id}/role`,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json",

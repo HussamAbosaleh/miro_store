@@ -19,7 +19,7 @@ function ProductDetails() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:5000/api/products/${id}`)
+    fetch(`http://https://miro-store-1.onrender.com/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
@@ -62,7 +62,7 @@ function ProductDetails() {
 
     try {
 
-      const res = await fetch("http://localhost:5000/api/cart/add", {
+      const res = await fetch("http://https://miro-store-1.onrender.com/api/cart/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +139,7 @@ function ProductDetails() {
 
           <img
             className="main-image"
-            src={`http://localhost:5000${selectedImage}`}
+            src={`http://https://miro-store-1.onrender.com${selectedImage}`}
             alt={product.name}
           />
 
@@ -149,7 +149,7 @@ function ProductDetails() {
 
               <img
                 key={img}
-                src={`http://localhost:5000${img}`}
+                src={`http://https://miro-store-1.onrender.com${img}`}
                 alt=""
                 className={selectedImage === img ? "active-thumb" : ""}
                 onClick={() => setSelectedImage(img)}

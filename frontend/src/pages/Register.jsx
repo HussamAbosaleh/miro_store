@@ -17,7 +17,7 @@ e.preventDefault();
 
 try{
 
-const res = await fetch("http://localhost:5000/api/users/register",{
+const res = await fetch("http://https://miro-store-1.onrender.com/api/users/register",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"

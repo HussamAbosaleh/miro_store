@@ -17,7 +17,7 @@ function Search() {
         setError("");
 
         const res = await fetch(
-          `http://localhost:5000/api/products?keyword=${encodeURIComponent(query)}`
+          `http://https://miro-store-1.onrender.com/api/products?keyword=${encodeURIComponent(query)}`
         );
 
         if (!res.ok) {
@@ -61,7 +61,7 @@ function Search() {
           {products.map((product) => {
             const image =
               product.images && product.images.length > 0
-                ? `http://localhost:5000${product.images[0]}`
+                ? `http://https://miro-store-1.onrender.com${product.images[0]}`
                 : "https://via.placeholder.com/400x500";
 
             return (

@@ -17,7 +17,7 @@ setCartItems([]);
 return;
 }
 
-const res = await fetch("http://localhost:5000/api/cart/my",{
+const res = await fetch("http://https://miro-store-1.onrender.com/api/cart/my",{
 headers:{
 Authorization:`Bearer ${token}`
 }

@@ -71,7 +71,7 @@ http://localhost:5173
 This frontend communicates with the backend API running on:
 
 ```
-http://localhost:5000
+http://https://miro-store-1.onrender.com
 ```
 
 Make sure the **backend server is running** before using the application.

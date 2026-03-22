@@ -17,7 +17,7 @@ const fetchProducts = async () => {
 
 try{
 
-const res = await fetch("http://localhost:5000/api/products")
+const res = await fetch("http://https://miro-store-1.onrender.com/api/products")
 
 if(!res.ok){
 throw new Error("Failed to fetch products")
@@ -50,7 +50,7 @@ if(!window.confirm("Delete this product?")) return
 
 try{
 
-const res = await fetch(`http://localhost:5000/api/products/${id}`,{
+const res = await fetch(`http://https://miro-store-1.onrender.com/api/products/${id}`,{
 method:"DELETE",
 headers:{
 Authorization:`Bearer ${token}`
@@ -148,7 +148,7 @@ onChange={(e)=>handleSearch(e.target.value)}
 
 const image =
 product.images && product.images.length > 0
-? `http://localhost:5000${product.images[0]}`
+? `http://https://miro-store-1.onrender.com${product.images[0]}`
 : "https://via.placeholder.com/60"
 
 /* ================= CALCULATE STOCK ================= */

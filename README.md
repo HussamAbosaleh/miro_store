@@ -99,7 +99,7 @@ This will start:
 After startup, open:
 
 Frontend: http://localhost:5173
-Backend API: http://localhost:5000
+Backend API: http://https://miro-store-1.onrender.com
 
 ---
 

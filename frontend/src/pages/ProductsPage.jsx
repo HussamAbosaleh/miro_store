@@ -12,7 +12,7 @@ const [loading,setLoading] = useState(true);
 
 useEffect(()=>{
 
-let url = "http://localhost:5000/api/products";
+let url = "http://https://miro-store-1.onrender.com/api/products";
 
 if(gender){
 url += `?gender=${gender}`;
@@ -49,7 +49,7 @@ return(
 
 const image =
 product.images && product.images.length > 0
-? `http://localhost:5000${product.images[0]}`
+? `http://https://miro-store-1.onrender.com${product.images[0]}`
 : "https://via.placeholder.com/400x500";
 
 const rating =
